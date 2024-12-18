@@ -1,0 +1,262 @@
+@use 'woff2' as *;
+@use 'mixins' as *;
+@use 'variables' as *;
+
+// Blend of normalizin’, opinionated defaults, and theme defaults.
+// They’re all combined here to eliminate unnecessary style overrides.
+
+html {
+  background: var(--fill-page-default);
+  box-sizing: border-box;
+  color: var(--color-text-default);
+  font-family: $font-text;
+  font-size: 16px;
+  font-size: calc(var(--rem-base) * 1px);
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  letter-spacing: -.02em;
+  margin: 0;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+main {
+  display: block;
+}
+
+h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure {
+  margin: 0;
+  padding: 0;
+}
+
+pre {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+a {
+  background-color: transparent;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+abbr[title] {
+  border-bottom: none;
+  text-decoration: underline;
+  text-decoration: underline dotted;
+}
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+code,
+kbd,
+samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+small {
+  font-size: 80%;
+}
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+img {
+  border-style: none;
+  display: block;
+  max-width: 100%;
+}
+
+svg {
+  display: block;
+
+  * {
+    vector-effect: non-scaling-stroke;
+  }
+}
+
+.svg--scale-stroke svg * {
+  vector-effect: none;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+}
+
+button,
+input {
+  overflow: visible;
+}
+
+button,
+select {
+  text-transform: none;
+}
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button;
+}
+
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+button:-moz-focusring,
+[type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+
+fieldset {
+  padding: 0.35em 0.75em 0.625em;
+}
+
+legend {
+  box-sizing: border-box;
+  color: inherit;
+  display: table;
+  max-width: 100%;
+  padding: 0;
+  white-space: normal;
+}
+
+progress {
+  vertical-align: baseline;
+}
+
+textarea {
+  overflow: auto;
+}
+
+[type="checkbox"],
+[type="radio"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+[type="search"] {
+  -webkit-appearance: textfield;
+  outline-offset: -2px;
+}
+
+[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  font: inherit;
+}
+
+details {
+  display: block;
+}
+
+summary {
+  display: list-item;
+}
+
+template {
+  display: none;
+}
+
+[hidden] {
+  display: none;
+}
+
+
+// Shuttle over from old base.scss template file
+// which shouldn't have had this stuff there.
+
+
+// TODO: Clean up.
+a {
+  background-color: var(--fill-body-link);
+  box-shadow: 0 calc(-1 * var(--padding-link-decoration)) 0 0 var(--stroke-body-link) inset;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  color: var(--color-body-link);
+  margin: 0 calc(-1 * var(--padding-link-decoration));
+  padding: 0 var(--padding-link-decoration);
+  text-decoration: none;
+  transition: background-color var(--timing-link-normal), color var(--timing-link-normal);
+  
+  svg * {
+    vector-effect: non-scaling-stroke;
+  }
+  
+  &:hover, &:focus {
+    background-color: var(--fill-body-link-hover);
+    color: var(--color-body-link-hover);
+  }
+  
+  &:focus-visible {
+    outline: 1px solid var(--fill-body-link-hover);
+  }
+  
+  // Ever tried click-n-dragging in Safari? The color isn’t inherited. Ugh.
+  &:active {
+    color: var(--color-body-link-active);
+    background-color: var(--fill-body-link-active);
+    transition: background-color 0s, color 0s;
+    
+    svg * {
+      transition: none;
+    }
+  }
+}
+
+a.anchor:target {
+  display: block;
+  height: 0;
+  position: relative;
+  top: calc(var(--a4) * -1);
+  visibility: hidden;
+}

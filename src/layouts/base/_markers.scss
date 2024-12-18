@@ -1,0 +1,34 @@
+// Ordered lists, unordered lists, and anything else
+// that uses pseudo-element markers.
+
+%shell-bulleted-list {
+	ul {
+		padding: 0;
+		
+		// Set list-style to none on each list item to un-bork Safari Reader View.
+		li {
+			list-style: none;
+			margin: 0 0 var(--a-1);
+			position: relative;
+			
+			// I want a responsive bullet, but using rems on pseudo elements can
+			// make them non-square (they get squished!). This uses a clip path
+			// on a pseudo element that spans the height of the list item, with
+			// an extra half-pixel for safety. (This is so fiddly...)
+			&::before {
+				background: var(--fill-bullet);
+				clip-path: circle(calc((var(--a-2) / 2) - 0.5px) at 50% calc(var(--a0) * 1.5 / 2));
+				content: '\200B'; // otherwise VoiceOver breaks!
+				display: block;
+				height: 100%;
+				margin: 0 calc(var(--b0) - var(--a-2)) 0 calc(var(--a0) * -1);
+				position: absolute;
+				width: var(--a-2);
+			}
+			
+			&:last-of-type {
+				margin-bottom: 0;
+			}
+		}
+	}
+}

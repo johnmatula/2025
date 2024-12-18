@@ -1,0 +1,88 @@
+@use "mixins" as *;
+@use "variables" as *;
+
+
+// GRID COLUMNS
+//
+// This design uses an offset vertical line as a strong basis of alignment.
+// I don’t use the “gap” property in order to have fussier control over
+// elements aligning to that vertical line.
+//
+// This layout handles pinholes, notches, safe areas with env() variables.
+
+:root {
+  --gap-grid-sides: var(--g8);
+  --gap-grid-middle: var(--g7);
+}
+
+
+%layout-columns {
+  align-items: baseline;
+  display: grid;
+  grid-template-columns:
+    [root-start]
+      calc(var(--gap-grid-sides) + env(safe-area-inset-left))
+    [gutter-start content-start]
+      auto
+    [gutter-end content-end]
+      calc(var(--gap-grid-sides) + env(safe-area-inset-right))
+    [root-end];
+  
+  @include at-least(w1) {
+    grid-template-columns:
+      [root-start]
+        calc(var(--gap-grid-sides) + env(safe-area-inset-left))
+      [gutter-start]
+        var(--a1)
+      [content-start]
+        auto
+      [gutter-end content-end]
+        calc(var(--gap-grid-sides) + env(safe-area-inset-right))
+      [root-end];
+  }
+  
+  @include at-least(w2) {
+    grid-template-columns:
+      [root-start]
+        calc(var(--gap-grid-sides) + env(safe-area-inset-left))
+      [gutter-start]
+        var(--gap-grid-middle)
+      [gutter-end]
+        var(--a1)
+      [content-start]
+        max(1fr,var(--a6))
+      [content-end]
+        calc(var(--gap-grid-sides) + env(safe-area-inset-right))
+      [root-end];
+  }
+}
+
+
+
+// Layout shell, with navigation bar and main content area.
+.root {
+  
+}
+
+.columns {
+  @extend %layout-columns;
+  
+  align-items: center;
+  justify-content: space-between;
+  display: grid;
+  flex-direction: column;
+  margin: 0;
+  min-height: 100vh;
+  padding: 0;
+  z-index: 0;
+  
+  & * {
+    background: #090;
+    @include smooth-box(5);
+    outline: 5px dashed #f0f;
+  }
+}
+
+.a11y--unset {
+  
+}

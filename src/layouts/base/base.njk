@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="apple-mobile-web-app-title" content="John Matula">
+    <meta name="application-name" content="John Matula">
+    <meta name="msapplication-TileColor" content="#BF240F">
+    <meta name="theme-color" content="#BF240F">
+
+    <meta name="author" content="John Matula">
+    <meta name="description" content="{{ ogdesc }}">
+    <meta name="title" content="John Matula">
+    <meta name="keywords" content="John Matula,jmatula,matula,johnmatula,johnmatu,johnmatu.la,john matu,matulaspatula,Johnathan Matula,graphic designer,visual designer,UX,UI,voice,voiceover,VO,pianist,piano,acting,actor">
+    <meta property="og:title" content="{% block ogtitle %}{% endblock %}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://johnmatu.la{{ page.url }}" />
+    <meta property="og:image" content="https://johnmatu.la{{ ogimage }}" />
+    <meta property="og:description" content="{{ ogdesc }}">
+    
+    <script defer type="module" src="/js/alpine.min.js"></script>
+    <script nomodule defer src="/js/alpine.es5.min.js"></script>
+    <link rel="stylesheet" href="{{ stylehref }}">
+      
+    <title>{{ titletag }}</title>
+  
+  </head>
+  <body data-a11y="unset" data-js="unset">
+    <div class="root">
+      {{ content | safe }}
+    </div>
+  
+    <script src="/js/main.js"></script>
+  </body>
+</html>

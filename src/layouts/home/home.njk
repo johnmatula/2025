@@ -1,0 +1,17 @@
+---
+layout: base/base.njk
+stylehref: css/home/home.css
+---
+
+
+{% block content %}
+<main class="columns">
+  <h1>This title comes from home.njk!</h1>
+  {% include "logo/logo.njk" %}
+  {% include "navigation/navigation.njk" %}
+  
+  <hr>
+  
+  {{ content | safe }}
+</main>
+{% endblock %}
