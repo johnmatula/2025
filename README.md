@@ -17,6 +17,6 @@ I take a cascading approach to this site, like CSS and Eleventy. The project str
 
 ## Miscellany
 
-The site is typeset in two variable fonts made for the Taiwan Space Agency (TASA). They were designed by [Local Remote](https://www.localremote.co/) who also made the [specimen site](https://www.localremote.co/tasa-typeface-collection) that totally won me over.
+The site is typeset in two variable fonts originally made for the [Taiwan Space Agency](https://www.tasa.org.tw/en-US). They were designed by [Local Remote](https://www.localremote.co/) and have a [specimen site](https://www.localremote.co/tasa-typeface-collection) that shows them off super nicely.
 
 Most of this site was designed in Sketch, which is my favorite and fast choice for  my 2014 MacBook Pro. (Figma’s Chromium-based app is less so.)
