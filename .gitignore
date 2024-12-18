@@ -1,0 +1,15 @@
+tmp
+.tmp
+node_modules
+dist
+dist-dev
+dist-prod
+.DS_Store
+src/markdown
+src/supporting/generated/*
+src/supporting/pdf/JohnMatula_resume.pdf
+src/supporting/mp4
+src/supporting/m4a
+src/supporting/
+*.tmp.html
+*.tmp.md
