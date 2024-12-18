@@ -6,7 +6,7 @@ This is the repo for my portfolio website. Its pages are generated with [Elevent
 
 ## Project structure
 
-I take a cascading approach to this site, just like CSS and Eleventy do by default. The project structure reflects this:
+I take a cascading approach to this site, like CSS and Eleventy. The project structure reflects this:
 
 * **assets** — images, media, downloadable files
 * **content** — documents of text that include references to assets
@@ -19,4 +19,4 @@ I take a cascading approach to this site, just like CSS and Eleventy do by defau
 
 The site is typeset in two variable fonts made for the Taiwan Space Agency (TASA). They were designed by [Local Remote](https://www.localremote.co/) who also made the [specimen site](https://www.localremote.co/tasa-typeface-collection) that totally won me over.
 
-Most of this site was designed in Sketch, which is my favorite and fast choice for my 2014 MacBook Pro. (Figma’s Chromium-based app is less so.)
+Most of this site was designed in Sketch, which is my favorite and fast choice for  my 2014 MacBook Pro. (Figma’s Chromium-based app is less so.)
