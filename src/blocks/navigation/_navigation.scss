@@ -5,10 +5,9 @@
   --timing-fade-out: 1.1s;
   --size-line: 3.5px;
   --demo-offset: 30%;
-  --fill-topbar-out: #e9e5e4;
-  --fill-topbar-in: #f5f3f1;
-  --fill-page: #f5f3f1;
-  --fill-line: #a6a4a1;
+  --fill-navigation-out: #e9e5e4;
+  --fill-navigation-in: var(--fill-page-default, #f5f3f1);
+  --fill-navigation-line: #a6a4a1;
   --spacing-link-offset: -.5rem;
   --radius-link-outline: 4px;
 }
@@ -21,46 +20,39 @@
   transition: opacity var(--timing-fade-in) cubic-bezier(.3,0,.35,1);
 }
 
-body {
-  background: var(--fill-page);
-  color: #121110;
-  font: 560 20px/24px system-ui, sans-serif;
-  letter-spacing: -.018rem;
-}
-
-a {
-  color: #9F1700;
+.navigation svg {
+  width: rem(46);
+  height: rem(36);
 }
 
 .topbar {
-  background-color: var(--fill-topbar-out);
-  box-shadow: 0 var(--size-line) 0 0 var(--fill-line);
+  background-color: var(--fill-navigation-out);
+  box-shadow: 0 var(--size-line) 0 0 var(--fill-navigation-line);
   position: relative;
+  z-index: 1;
   
-  // Backdrop that shows when
-  // interacting with the top bar
+  // Backdrop that shows when interacting with the top bar
   &::before {
     @include pseudo-overlay;
     @include topbar-fade-out;
     
-    background: var(--fill-topbar-in);
+    background: var(--fill-navigation-in);
     opacity: 0;
     pointer-events: none;
     user-select: none;
   }
   
-  // Overlay that applies a “dimming”
-  // effect to bar and anything underneath
+  // Overlay that applies a “dimming” effect to anything underneath bar
   // (TODO: fiddle with filters)
   &::after {
     @include pseudo-overlay;
     @include topbar-fade-out;
+    @include backdrop-filter(grayscale(100%) brightness(106%) contrast(98%) sepia(4%));
     
     background: #00000000;
-    backdrop-filter: grayscale(100%) brightness(106%) contrast(98%) sepia(4%);
-    -webkit-backdrop-filter: grayscale(100%) brightness(106%) contrast(98%) sepia(4%);
     opacity: 1;
     pointer-events: none;
+    z-index: 2;
   }
   
   &:focus-within,
@@ -76,25 +68,59 @@ a {
       
       opacity: 0;
     }
+  }
+  
+  &__contents {
+    @extend %layout-base;
     
-    .home::after {
+    position: relative;
+  }
+}
+
+// Intrinsic height based off this
+.home {
+  align-items: baseline;
+  display: flex;
+  grid-area: minor;
+  padding: s(8) 0 s(5);
+  position: relative;
+  
+  &::after {
+    @include pseudo-overlay;
+    @include topbar-fade-out;
+    
+    box-shadow: var(--size-line) 0 0 0 var(--fill-navigation-line);
+    opacity: 0;
+    pointer-events: none;
+    
+    .topbar:hover &,
+    .topbar:focus-within & {
       @include topbar-fade-in;
       
       opacity: 1;
     }
   }
   
-  
-  &__contents {
-    display: flex;
-    position: relative;
+  &__label {
+    @include topbar-fade-out;
+    
+    opacity: 0;
+    padding: 0 0 0 s(4);
+    
+    .topbar:hover &,
+    .topbar:focus-within & {
+      @include topbar-fade-in;
+      
+      opacity: 1;
+    }
   }
 }
 
 .breadcrumbs {
   display: flex;
   flex: 1 1 100%;
-  padding: 3rem 2rem 2rem;
+  grid-area: major;
+  padding: 0;
   
   ul {
     display: flex;
@@ -103,6 +129,8 @@ a {
   
   li {
     flex: 0 1 auto;
+    list-style: none;
+    list-style-type: none;
   }
   
   a {
@@ -131,38 +159,5 @@ a {
   
   li[aria-current="page"] {
     flex: 0 0 100%;
-  }
-}
-
-.home {
-  display: flex;
-  flex: 0 0 var(--demo-offset);
-  padding: 3rem 2rem 2rem;
-  position: relative;
-  
-  &::after {
-    @include pseudo-overlay;
-    @include topbar-fade-out;
-    
-    box-shadow: var(--size-line) 0 0 0 var(--fill-line);
-    opacity: 0;
-    pointer-events: none;
-  }
-  
-  &__logo {
-    padding: 0 2rem 0 0;
-  }
-  
-  &__label {
-    @include topbar-fade-out;
-    
-    opacity: 0;
-    
-    .topbar:hover &,
-    .topbar:focus-within & {
-      @include topbar-fade-in;
-      
-      opacity: 1;
-    }
   }
 }

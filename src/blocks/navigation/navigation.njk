@@ -1,13 +1,34 @@
-<div class="topbar">
-  <div class="topbar__contents">
-    <a aria-label="Return to home" href="#" class="home">
-      <span class="home__logo" aria-hidden="true">JM</span><span class="home__label">Home</span></a>
-  <nav aria-label="Breadcrumbs" class="breadcrumbs">
-    <ul>
-      <li><a href="#">Case Studies</a></li>
-      <li><a href="#">Smarthome</a></li>
-      <li aria-current="page">Essay: Beyond a button??????1234</li>
-    </ul>
-  </nav>
+<!--
+  TODO: Change data handling so navigation can be used like any other macro.
+  For now, it uses an `include` statement so breadcrumbs work as expected.
+-->
+
+<div class="navigation">
+  <!--div class="logo">
+    {% svg "./src/assets/svg/site-logo.svg", "John does design, web, and talent.", "logo__svg" %}
+  </div-->
+  <div class="topbar">
+    <div class="topbar__contents">
+      <a aria-label="Return to home" href="/" class="home">
+        <span class="home__logospace" aria-hidden="true">
+          {% svg "./src/assets/svg/site-logo.svg", "TODO: Remove this temp placement with the overlapped version instead", "home__svg" %}
+        </span>
+        <span class="home__label">Home</span>
+      </a>
+      <nav aria-label="Breadcrumb" class="breadcrumbs">
+        <ul>
+          {% for crumb in breadcrumb %}
+          <li>
+            <a
+              href="{{crumb.url}}"
+              {% if loop.last %} aria-current="page" {% endif %}
+            >
+              {{crumb.name}}
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </nav>
+    </div>
   </div>
 </div>
