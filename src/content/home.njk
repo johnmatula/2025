@@ -1,4 +1,5 @@
 ---
+title: Home
 titletag: John Matula
 
 layout: home/home.njk
@@ -13,8 +14,8 @@ ogimage: /assets/og/og-home.png
 
 
 {% block content %}
-<div class="home">
-	<h1>Here is my content</h1>
-	<h3>A dearth of content</h3>
-</div>
+
+{% svg "./src/assets/svg/home-art.svg", "John does design, web, and talent.", "hero" %}
+
+
 {% endblock %}
