@@ -14,12 +14,16 @@ module.exports = (function(eleventyConfig) {
 
   eleventyConfig.setUseGitIgnore(false);
 
-  eleventyConfig.addPassthroughCopy({ "tmp/css": "css" });
-  eleventyConfig.addPassthroughCopy({ "tmp/js": "js" });
-  //eleventyConfig.addPassthroughCopy({ "src/internals/fonts": "fonts" }); fonts are base64'd at the moment
+  if(env === "prod") {
+    eleventyConfig.addPassthroughCopy({ "tmp/postcss": "css" });
+  } else {
+    eleventyConfig.addPassthroughCopy({ "tmp/scss/**/*.css": "css" });
+    eleventyConfig.addPassthroughCopy({ "tmp/scss/**/*.css.map": "css" });
+  }
+  eleventyConfig.addPassthroughCopy({ "tmp/babeljs": "js" });
   eleventyConfig.addPassthroughCopy({ "src/internals/favicon": "/" });
   eleventyConfig.addPassthroughCopy({ "src/internals/vendor-min-js": "js" });
-  eleventyConfig.addPassthroughCopy({ "src/assets": "assets" }); // unnecessary???
+  eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
 
   eleventyConfig.addNunjucksFilter("is_string", function(obj) {
     return typeof obj === "string";
@@ -69,8 +73,87 @@ module.exports = (function(eleventyConfig) {
           class="responsive__img">
       </picture>${linkEnd}${containerEnd}`;
   });
+  
+  eleventyConfig.addNunjucksAsyncShortcode('italics', async(text) => {
+    var t = text.split(/\s+/)
+    var o = `<span aria-label="[in italics] ${text}" class="a11y--italics">`
+    
+    t.forEach((item) => {
+      o += `<em>${item}</em> `
+    })
+    
+    return o.trim() + "</span>";
+  })
+  
+  eleventyConfig.addNunjucksAsyncShortcode('svg', async (src, label, className/*, alt, sizes*/) => {
+    let metadata = await Image(src, {
+      formats: ['svg'],
+      dryRun: true,
+    })
+    
+    var css = className ? `class="${className}" ` : ``;
+    var attrs = ` aria-label="${label}" ${css}`;
 
-  //eleventyConfig.addLayoutAlias("case-study", "../templates/case-study/case-study.njk");
+    var tag = metadata.svg[0].buffer.toString()
+    return tag.slice(0, 4) + attrs + tag.slice(4);
+  })
+  
+  /* To Title Case © 2018 David Gouch | https://github.com/gouch/to-title-case */
+  
+  // eslint-disable-next-line no-extend-native
+  String.prototype.toTitleCase = function () {
+    'use strict'
+    var smallWords = /^(a|an|and|as|at|but|by|en|for|if|in|nor|of|on|or|per|the|to|v.?|vs.?|via)$/i
+    var alphanumericPattern = /([A-Za-z0-9\u00C0-\u00FF])/
+    var wordSeparators = /([ :–—-])/
+    
+    return this.split(wordSeparators)
+    .map(function (current, index, array) {
+      if (
+        /* Check for small words */
+        current.search(smallWords) > -1 &&
+        /* Skip first and last word */
+        index !== 0 &&
+        index !== array.length - 1 &&
+        /* Ignore title end and subtitle start */
+        array[index - 3] !== ':' &&
+        array[index + 1] !== ':' &&
+        /* Ignore small words that start a hyphenated phrase */
+        (array[index + 1] !== '-' ||
+          (array[index - 1] === '-' && array[index + 1] === '-'))
+      ) {
+        return current.toLowerCase()
+      }
+      
+      /* Ignore intentional capitalization */
+      if (current.substr(1).search(/[A-Z]|\../) > -1) {
+        return current
+      }
+      
+      /* Ignore URLs */
+      if (array[index + 1] === ':' && array[index + 2] !== '') {
+        return current
+      }
+      
+      /* Capitalize the first letter */
+      return current.replace(alphanumericPattern, function (match) {
+        return match.toUpperCase()
+      })
+    })
+    .join('')
+  }
+  
+  eleventyConfig.setServerOptions({
+    module: "@11ty/eleventy-server-browsersync",
+    
+    // Default Browsersync options shown:
+    files: ["tmp"],
+    port: 8080,
+    open: false,
+    notify: false,
+    ui: false,
+    ghostMode: false
+  });
 
   return {
     dir: {
