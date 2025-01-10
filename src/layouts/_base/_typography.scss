@@ -43,11 +43,11 @@
     color: var(--color-body-link);
     margin: 0 calc(-1 * var(--padding-link-decoration));
     padding: 0 var(--padding-link-decoration);
-    transition: background-color $timing-link, color $timing-link;
+    transition: background-color .1s, color .1s;
     text-decoration: none;
 
     svg * {
-      transition: stroke $timing-link, fill $timing-link;
+      transition: stroke .1s, fill .1s;
     }
 
     &.link--no-underline {

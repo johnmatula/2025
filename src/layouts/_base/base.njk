@@ -1,3 +1,20 @@
+{#
+  Base Layout
+
+  The foundation for all other page layouts.
+  Head matter, outermost body container, and script declarations live here.
+  
+  {{
+    ogtitle     Title (≈60 ch) shown when a link to the page is shared.
+    ogimage     Path to image (1200 W × 630 H) used as the link’s thumbnail.
+    ogdesc      Extra caption (≈80 ch) included with link on most platforms.
+    stylehref   Path to stylesheet to use.
+    titletag    Text to use in the title tag (and usually by Google).
+  }}
+  
+  Always include a leading slash in template paths: "/pdf/resume.pdf"
+#}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -28,11 +45,14 @@
     <script nomodule defer src="/js/alpine.es5.min.js"></script>
     <link rel="stylesheet" href="{{ stylehref }}">
       
-    <title>{{ titletag }}</title>
+    <title>{% if titletag %}{{ titletag }}{% else %}John Matula{% endif %}</title>
   
   </head>
-  <body data-a11y="unset" data-js="unset">
+    
+  <body x-data="base()" data-a11y="unset" data-js="unset" data-alpinejs="unset" x-init="getBaseReady">
     <div class="root">
+      {% from "src/blocks/button/button.njk" import button %}
+      
       {{ content | safe }}
     </div>
   

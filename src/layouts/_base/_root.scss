@@ -1,0 +1,66 @@
+@use 'woff2' as *;
+@use 'normalize' as *;
+@use 'mixins' as *;
+@use 'variables' as *;
+
+html, body {
+  background: var(--fill-page, var(--fill-page-default));
+  color: var(--color-text, var(--color-text-default));
+  font-family: $font-text;
+  font-size: calc(16px * var(--rem-factor));
+  letter-spacing: -.0015em;
+}
+
+*, *:before, *:after {
+  outline: 2px dotted #f0f0;
+}
+
+body {
+  letter-spacing: rem(-0.02);
+}
+
+a {
+  color: var(--color-link, #{$hue-orange-33});
+  text-underline-offset: rem(2.25);
+  text-decoration-thickness: rem(1.5);
+  
+  &:hover, &:focus {
+    color: var(--color-link-hover, #{$hue-orange-66})
+  }
+  
+  &:active {
+    color: var(--color-link-active, #{$hue-orange-00});
+  }
+}
+
+// Fake italics for this site since these fonts have none.
+// Note that this has the very-intended side effect of nested slanties.
+// These magic values are all optically set. Use the italics() macro
+// instead of tags so word breaks work properly and accessibly.
+em, i {
+  font-style: normal;
+  display: inline-block;
+  transform: skew(-9.3deg) scale(.994,1.0018) translate(-.07em,0);
+  transform-origin: left bottom;
+}
+
+.root {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-width: 100vw;
+  justify-content: stretch;
+}
+
+a.anchor:target {
+  display: block;
+  height: 0;
+  position: relative;
+  top: s(-4);
+  visibility: hidden;
+}
+
+.a11y--italics {
+  display: contents;
+}

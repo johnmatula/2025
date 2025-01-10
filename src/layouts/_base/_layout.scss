@@ -1,0 +1,54 @@
+@use "mixins" as *;
+@use "variables" as *;
+@use "typography" as *;
+
+// DEFAULT LAYOUT GRID
+//
+// A minor-major two-column grid. The vertical line is held left of center
+// to create this layout. The minor “gutter” holds headers and aligns type.
+
+
+  %layout-base {
+    align-items: baseline;
+    display: grid;
+    grid-template-columns:
+      [root-start]
+      calc(var(--root-margin) + env(safe-area-inset-left
+      ))
+      [minor-start major-start]
+      auto
+      [minor-end major-end]
+      calc(var(--root-margin) + env(safe-area-inset-right))
+      [root-end];
+    max-width: s(175);
+    
+    @include at-least(w1) {
+      grid-template-columns:
+        [root-start]
+        calc(var(--root-margin) + env(safe-area-inset-left))
+        [minor-start]
+        1fr
+        [minor-end]
+        var(--root-margin)
+        [major-start]
+        2fr
+        [major-end]
+        calc(var(--root-margin) + env(safe-area-inset-right))
+        [root-end];
+    }
+    
+    @include at-least(w2) {
+      grid-template-columns:
+        [root-start]
+        calc(var(--root-margin) + env(safe-area-inset-left))
+        [minor-start]
+        1fr
+        [minor-end]
+        var(--root-margin)
+        [major-start]
+        3fr
+        [major-end]
+        calc(var(--root-margin) + env(safe-area-inset-right))
+        [root-end];
+    }
+  }

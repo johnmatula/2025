@@ -1,4 +1,5 @@
 @use "sass:map";
+@use "sass:math";
 @use "sass:meta";
 
 
@@ -13,12 +14,12 @@
 // and layouts aren’t really fluid so this system works well here.
 
 $width-breakpoints: (
-  'w0': (min-width:  440px),
-  'w1': (min-width:  600px),
-  'w2': (min-width:  760px),
-  'w3': (min-width: 1000px),
+  'w0': (min-width:  400px),
+  'w1': (min-width:  560px),
+  'w2': (min-width:  720px),
+  'w3': (min-width:  960px),
   'w4': (min-width: 1200px),
-  'w5': (min-width: 1400px)
+  'w5': (min-width: 1600px)
 );
 
 $height-breakpoints: (
@@ -28,15 +29,21 @@ $height-breakpoints: (
 
 
 
-// to-rem
-// Processes pixel values to relative em units, where 16 px==1 rem.
-// (16 is hardcoded purposefully. See typography.scss for size factors.)
+// rem
+// Processes pixel values to relative em units, where 20 px==1 rem.
+// (20 is hardcoded purposefully. See typography.scss for size factors.)
 
-@function to-rem($size) {
-  $rem-size: $size / 16;
+@function rem($size) {
+  $rem-size: math.div($size, 16);
   @return #{$rem-size}rem;
 }
 
+// s
+// Returns an 8-pixel grid value of the provided unitless factor, in rems.
+// Accepts decimals (e.g., 1.5 == 20 px == 1.875 rem).
+@function s($factor) {
+  @return math.div($factor * 8rem, 16)
+}
 
 
 // at-least
@@ -46,11 +53,11 @@ $height-breakpoints: (
 
 @mixin at-least($name) {
   @if map.has-key($width-breakpoints, $name) {
-    @media (#{meta.inspect(map.get($width-breakpoints, $name))}) {
+    @media #{meta.inspect(map.get($width-breakpoints, $name))} {
       @content;
     }
   } @else if map.has-key($height-breakpoints, $name) {
-    @media (#{meta.inspect(map.get($height-breakpoints, $name))}) {
+    @media #{meta.inspect(map.get($height-breakpoints, $name))} {
       @content;
     }
   } @else {
@@ -105,21 +112,28 @@ $height-breakpoints: (
 
 
 
-// typography(font-weight, font-size, line-height, [letter-spacing, font-family])
-// An invented shorthand to set common type values: • font weight, 100s scale •
-// font size, px • line height, px • letter spacing, px, optional •
-// font family, string, optional
+// typography(font-weight, font-size, line-height, [letter-spacing,
+// grading-weight-delta, grading-spacing-delta, font-family])
+// An invented shorthand to set common type values:
+//  • font weight, 100s scale
+//  • font size, rem
+//  • line height, rem
+//  • letter spacing, rem (optional)
+//  • grading-weight-delta, 100s scale (optional; added to font-weight and
+//    applied when device is in dark mode)
+//  • grading-spacing-delta, 100s scale (optional; similar for letter-spacing)
+//  • font family, string
 
-@mixin typography($font-weight, $font-size, $line-height, $letter-spacing: null, $font-family: null) {
+@mixin typography($font-weight, $font-size, $line-height, $letter-spacing: null, $grading-weight-delta: 0, $grading-spacing-delta: 0, $font-family: null) {
   @if ($font-family) {
     font-family: $font-family;
   }
   @if ($letter-spacing) {
-    letter-spacing: to-rem($letter-spacing);
+    letter-spacing: $letter-spacing;
   }
-  font-size: to-rem($font-size);
+  font-size: $font-size;
   font-weight: $font-weight;
-  line-height: to-rem($line-height);
+  line-height: $line-height;
 }
 
 
@@ -151,17 +165,17 @@ $height-breakpoints: (
   $x: var(--spacing-link-offset);
   $y: var(--spacing-link-offset);
   
-  @if($offsetX != null) { $x: to-rem($offsetX) }
-  @if($offsetY != null) { $y: to-rem($offsetY) }
+  @if($offsetX != null) { $x: rem($offsetX) }
+  @if($offsetY != null) { $y: rem($offsetY) }
   
-  bottom: var(--spacing-link-offset);
-  border-radius: var(--radius-link-outline);
+  bottom: $y;
+  border-radius: 2px;
   content: '';
   display: block;
-  left: var(--spacing-link-offset);
+  left: $x;
   position: absolute;
-  right: var(--spacing-link-offset);
-  top: var(--spacing-link-offset);
+  right: $x;
+  top: $y;
 }
 
 
@@ -193,25 +207,41 @@ $height-breakpoints: (
 }
 
 
+
 // smooth-box
-// Styles a box with smoothly rounded corners
-@mixin smooth-box($radius, $safe: null) {
-  $s: $safe or 5px;
+// Styles a box with smoothly rounded corners, where
+//   radius  = amount of curve, as defined by design software
+//   safe    = extra buffer so easing effect of curve isn’t clipped
+//             === about 35% of the corner size (magic number via testing)
+//   overlap = overlap of rounded corners with edges of main “cross” section
+//             === 2px, or one full pixel of overlap at each “seam”
+//
+// Buffers and overlaps are needed so that zoomed interfaces work properly.
+@mixin smooth-box($radius, $safe: null, $overlap: null) {
+  $s: $safe or math.ceil(0.35 * $radius);
+  $r: $s + $radius;
+  $o: $overlap or 2;
+  
+  // Uses a placeholder selector for the behemoth mask image property.
+  // The same image stack is used and scaled for each specified radius size.
+  // The stack is ordered: (1) top left, (2) top right, (3) bottom right,
+  // (4) bottom left, (5) horizontal cross rect, (6) vertical cross rect.
+  @extend %smooth-box-mask;
   
   mask-position:
     0% 0%,
     100% 0%,
     100% 100%,
     0 100%,
-    0 var(--corner-size),
-    var(--corner-size) 0;
+    0 rem($r - $o),
+    rem($r - $o) 0;
   mask-size:
-    var(--corner-size) var(--corner-size),
-    var(--corner-size) var(--corner-size),
-    var(--corner-size) var(--corner-size),
-    var(--corner-size) var(--corner-size),
-    100% calc(100% - 2 * var(--corner-size)),
-    calc(100% - 2 * var(--corner-size)) 100%;
+    rem($r) rem($r),
+    rem($r) rem($r),
+    rem($r) rem($r),
+    rem($r) rem($r),
+    101% calc(100% - #{rem(2 * $r)} + #{rem(2 * $o)}),
+    calc(100% - #{rem(2 * $r)} + #{rem(2 * $o)}) 101%;
 }
 
 %smooth-box-mask {
@@ -220,7 +250,7 @@ $height-breakpoints: (
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 42 42'%3E%3Cpath transform='rotate(90,21,21)' d='m42 0 0 42-42 0 .001-2.855 0 0 .0071-1.158 0 0 .0145-1.1154 0 0 .0216-1.0743a133.3124 133.3124 0 0 1 .0135-.5221l.0513-1.5082 0 0 .043-.9585 0 0 .0502-.9226a87.887 87.887 0 0 1 .0277-.4481l.0607-.871 0 0 .0678-.8382a68.596 68.596 0 0 1 .0365-.4073l.0782-.7915a59.4466 59.4466 0 0 1 .0417-.3846l.0887-.7477 0 0 .0955-.72a46.6048 46.6048 0 0 1 .1025-.6939l.1093-.6688 0 0 .1162-.645a36.9748 36.9748 0 0 1 .123-.6227l.1298-.6015 0 0 .1365-.5817 0 0 .1433-.5632a29.5104 29.5104 0 0 1 .15-.546l.1567-.5299 0 0 .1633-.5153a27.1197 27.1197 0 0 1 .17-.5019l.1766-.4898a26.8974 26.8974 0 0 1 .0908-.2408l.1865-.4742 0 0 .193-.4653 0 0 .1995-.4578 0 0 .3115-.6753 0 0 .2157-.4446 0 0 .3356-.6615 0 0 .2318-.4394 0 0c2.7017-5.0519 6.6664-9.0166 11.7183-11.7183l.4527-.2387 0 0 .6818-.3453 0 0 .4584-.2216 0 0 .463-.2148 0 0 .4693-.208a28.1616 28.1616 0 0 1 .2374-.1013l.481-.1975 0 0 .4909-.1906 0 0 .5019-.1836 0 0 .5143-.1766a27.3532 27.3532 0 0 1 .2624-.0857l.5358-.166a28.5236 28.5236 0 0 1 .2738-.0803l.5604-.1554 0 0 .5786-.1483 0 0 .5981-.141a35.1144 35.1144 0 0 1 .937-.1982l.6533-.1232a42.2829 42.2829 0 0 1 1.0263-.171l.7172-.105a51.3188 51.3188 0 0 1 .7453-.0975l.7748-.0903 0 0 .8057-.0829 0 0 .838-.0754 0 0 .8716-.068 0 0 .9068-.0607 0 0 .9434-.053a100.8432 100.8432 0 0 1 .4858-.0238l1.0009-.0418 0 0 1.0409-.0343 0 0 1.0824-.0266a147.1273 147.1273 0 0 1 .5572-.0105l1.1473-.0152 0 0 1.1923-.0076 0 0 2.8551-.0009Z' fill-rule='evenodd'/%3E%3C/svg%3E"),
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 42 42'%3E%3Cpath transform='rotate(180,21,21)' d='m42 0 0 42-42 0 .001-2.855 0 0 .0071-1.158 0 0 .0145-1.1154 0 0 .0216-1.0743a133.3124 133.3124 0 0 1 .0135-.5221l.0513-1.5082 0 0 .043-.9585 0 0 .0502-.9226a87.887 87.887 0 0 1 .0277-.4481l.0607-.871 0 0 .0678-.8382a68.596 68.596 0 0 1 .0365-.4073l.0782-.7915a59.4466 59.4466 0 0 1 .0417-.3846l.0887-.7477 0 0 .0955-.72a46.6048 46.6048 0 0 1 .1025-.6939l.1093-.6688 0 0 .1162-.645a36.9748 36.9748 0 0 1 .123-.6227l.1298-.6015 0 0 .1365-.5817 0 0 .1433-.5632a29.5104 29.5104 0 0 1 .15-.546l.1567-.5299 0 0 .1633-.5153a27.1197 27.1197 0 0 1 .17-.5019l.1766-.4898a26.8974 26.8974 0 0 1 .0908-.2408l.1865-.4742 0 0 .193-.4653 0 0 .1995-.4578 0 0 .3115-.6753 0 0 .2157-.4446 0 0 .3356-.6615 0 0 .2318-.4394 0 0c2.7017-5.0519 6.6664-9.0166 11.7183-11.7183l.4527-.2387 0 0 .6818-.3453 0 0 .4584-.2216 0 0 .463-.2148 0 0 .4693-.208a28.1616 28.1616 0 0 1 .2374-.1013l.481-.1975 0 0 .4909-.1906 0 0 .5019-.1836 0 0 .5143-.1766a27.3532 27.3532 0 0 1 .2624-.0857l.5358-.166a28.5236 28.5236 0 0 1 .2738-.0803l.5604-.1554 0 0 .5786-.1483 0 0 .5981-.141a35.1144 35.1144 0 0 1 .937-.1982l.6533-.1232a42.2829 42.2829 0 0 1 1.0263-.171l.7172-.105a51.3188 51.3188 0 0 1 .7453-.0975l.7748-.0903 0 0 .8057-.0829 0 0 .838-.0754 0 0 .8716-.068 0 0 .9068-.0607 0 0 .9434-.053a100.8432 100.8432 0 0 1 .4858-.0238l1.0009-.0418 0 0 1.0409-.0343 0 0 1.0824-.0266a147.1273 147.1273 0 0 1 .5572-.0105l1.1473-.0152 0 0 1.1923-.0076 0 0 2.8551-.0009Z' fill-rule='evenodd'/%3E%3C/svg%3E"),
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 42 42'%3E%3Cpath transform='rotate(270,21,21)' d='m42 0 0 42-42 0 .001-2.855 0 0 .0071-1.158 0 0 .0145-1.1154 0 0 .0216-1.0743a133.3124 133.3124 0 0 1 .0135-.5221l.0513-1.5082 0 0 .043-.9585 0 0 .0502-.9226a87.887 87.887 0 0 1 .0277-.4481l.0607-.871 0 0 .0678-.8382a68.596 68.596 0 0 1 .0365-.4073l.0782-.7915a59.4466 59.4466 0 0 1 .0417-.3846l.0887-.7477 0 0 .0955-.72a46.6048 46.6048 0 0 1 .1025-.6939l.1093-.6688 0 0 .1162-.645a36.9748 36.9748 0 0 1 .123-.6227l.1298-.6015 0 0 .1365-.5817 0 0 .1433-.5632a29.5104 29.5104 0 0 1 .15-.546l.1567-.5299 0 0 .1633-.5153a27.1197 27.1197 0 0 1 .17-.5019l.1766-.4898a26.8974 26.8974 0 0 1 .0908-.2408l.1865-.4742 0 0 .193-.4653 0 0 .1995-.4578 0 0 .3115-.6753 0 0 .2157-.4446 0 0 .3356-.6615 0 0 .2318-.4394 0 0c2.7017-5.0519 6.6664-9.0166 11.7183-11.7183l.4527-.2387 0 0 .6818-.3453 0 0 .4584-.2216 0 0 .463-.2148 0 0 .4693-.208a28.1616 28.1616 0 0 1 .2374-.1013l.481-.1975 0 0 .4909-.1906 0 0 .5019-.1836 0 0 .5143-.1766a27.3532 27.3532 0 0 1 .2624-.0857l.5358-.166a28.5236 28.5236 0 0 1 .2738-.0803l.5604-.1554 0 0 .5786-.1483 0 0 .5981-.141a35.1144 35.1144 0 0 1 .937-.1982l.6533-.1232a42.2829 42.2829 0 0 1 1.0263-.171l.7172-.105a51.3188 51.3188 0 0 1 .7453-.0975l.7748-.0903 0 0 .8057-.0829 0 0 .838-.0754 0 0 .8716-.068 0 0 .9068-.0607 0 0 .9434-.053a100.8432 100.8432 0 0 1 .4858-.0238l1.0009-.0418 0 0 1.0409-.0343 0 0 1.0824-.0266a147.1273 147.1273 0 0 1 .5572-.0105l1.1473-.0152 0 0 1.1923-.0076 0 0 2.8551-.0009Z' fill-rule='evenodd'/%3E%3C/svg%3E"),
-    linear-gradient(#000, #000),
-    linear-gradient(#000, #000);
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 1 1' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h1v1h-1z'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 1 1' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h1v1h-1z'/%3E%3C/svg%3E");
   mask-repeat: no-repeat;
 }
