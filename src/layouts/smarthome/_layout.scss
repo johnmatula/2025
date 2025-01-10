@@ -1,0 +1,14 @@
+@use "utilities" as *;
+
+
+// Layout shell, with navigation bar and main content area.
+.columns {
+  @extend %layout-base;
+  
+  flex: 1 1 100%;
+  padding: 0 var(--root-margin);
+}
+
+.a11y--unset {
+  
+}

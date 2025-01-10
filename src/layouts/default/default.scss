@@ -1,0 +1,12 @@
+@use "../_base/base" as *;
+@use "_layout" as *;
+
+.content {
+	h1, h2, h3, h4, h5, h6 {
+		grid-column: minor;
+	}
+	
+	p, .buttonset {
+		grid-column: major;
+	}
+}

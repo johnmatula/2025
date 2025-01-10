@@ -1,0 +1,13 @@
+@use "utilities" as *;
+
+
+// Layout shell, with navigation bar and main content area.
+.content {
+  @extend %layout-base;
+  
+  flex: 1 1 100%;
+}
+
+.a11y--unset {
+  
+}

@@ -1,0 +1,27 @@
+---
+layout: _base/base.njk
+stylehref: /css/default.css
+---
+{#
+  Default Layout
+  
+  The layout most pages use, in a responsive two-column layout.
+  
+  {{
+    non-og-title?
+    non-og-desc?
+    date-flag?
+    reading-time?
+  }}
+#}
+
+
+{% block content %}
+{% include "../../blocks/navigation/navigation.njk" %}
+
+<main class="content">
+  
+  {{ content | safe }}
+  
+</main>
+{% endblock %}

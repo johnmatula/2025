@@ -1,0 +1,15 @@
+---
+layout: _base/base.njk
+stylehref: /css/smarthome.css
+---
+
+
+{% block content %}
+{% include "../../blocks/navigation/navigation.njk" %}
+
+<main class="columns">
+  
+  {{ content | safe }}
+  
+</main>
+{% endblock %}
