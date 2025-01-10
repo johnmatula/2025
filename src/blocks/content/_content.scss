@@ -1,9 +1,5 @@
 @use "utilities" as *;
 
-// A mask is applied over a single stroke (think like a neon tube lol) so
-// that everything can be animated. The dash-offsets were calculated in
-// Illustrator using one of the JSX plugins I downloaded a while ago.
 .content {
-	background: red;
-	grid-column: content;
+
 }
