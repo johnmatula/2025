@@ -23,24 +23,29 @@ To build this site, I made some deliberate choices([!](https://64.media.tumblr.c
 #### Transitions are only applied to properties optimized by the GPU
 Different visual states are pulled off by using [CSS tricks](https://css-tricks.com), like layered elements, blend modes, backdrops, SVG, and box shadows. That all stays fixed; only the `opacity` and `transform` are modified. Doing so means the GPU optimally handles the rendering, and the payoff is buttery smooth animation.
 
-The [top bar](https://github.com/johnmatula/2025/blob/main/src/blocks/navigation/_navigation.scss) is a good example of this in action, using a mix of `backdrop-filter`s and `backdrop-blend-mode`s to create an effect that smoothly changes color on hover / focus. (If magic numbers are bad, then [this filter declaration](https://github.com/johnmatula/2025/blob/629ac9fd3087acf6882c047f3579bfa78bead7e2/src/blocks/navigation/_navigation.scss#L50) must be evil.)
+The [top bar](https://github.com/johnmatula/2025/blob/main/src/blocks/navigation/_navigation.scss) is one example of this. It uses a mix of `backdrop-filter`s and `backdrop-blend-mode`s to create an effect that smoothly changes color on hover and focus. (If magic numbers are bad, then [this filter declaration](https://github.com/johnmatula/2025/blob/629ac9fd3087acf6882c047f3579bfa78bead7e2/src/blocks/navigation/_navigation.scss#L50) must be evil.)
 
 #### Custom easing functions refine transitions
-I think I ended up using a custom `cubic-bezier()` easing function for each transition between states. For a simple site like this, these interactions carry a lot of weight and deserve consideration.
+I used a custom `cubic-bezier` function to control the easing curve of each transition, used in place of one of `ease` function keywords.
 
-For instance, I added a custom curve for how the “pushy” button style as it springs back from its pressed state: there’s a brief sticky start, then a sudden jolt of force upward, slightly overshooting with a little bounce, before settling back at rest. All this fuss was for the extremely important “[download my résumé](https://johnmatu.la/assets/pdf/JohnMatula_resume.pdf)” button.
+This is a simple site, so the smooth behavior of a transition ends up being an important detail. Consider this: the default function, `ease` or `cubic-bezier(0.25, 0.1, 0.25, 1)`, offers a transition with a smooth quick start and a smooth slower end.
+
+Contrast that with the “pushy” button style (`cubic-bezier(0.22, 1.28, 0.62, 1)`), which has a curve that mimics what a big push button would do. There’s a sudden jolt of force from the spring pushing the button back upward, slightly overshooting with a little bounce, before smoothly settling back at rest. This detail has a point, too, as it makes the “[download résumé](https://johnmatu.la/assets/pdf/JohnMatula_resume.pdf)” link as enticing as possible.
 
 
 ### Low network usage
 
 #### Each page uses a single image sprite
-An image sprite sheet is a single file that contains multiple, unrelated images. I use this technique to prepare a sheet for each page. The images to be shown on that page are first smooshed together into one file. It’s loaded by the page and re-sliced into separate images.
+An image sprite sheet is a single file that contains multiple, unrelated images. I use this technique to prepare a sheet for each page. The images to be shown on that page are first smooshed together into one file. It’s loaded by the page and re-sliced into separate visuals.
+
+By doing this, multiple network requests that would be needed for separate image files are reduced to a single request. 
 
 #### Assets for each page are optimized
-Whenever possible, art and content is represented with plain text. When that’s not possible, I use vector art. Raster images are separated from vector art so that they can be optimally served, like on the Smarthome page.
+Art and content is represented with plain text and vector art. Raster images are separated from vector art so that they can be optimally served, like on the Smarthome page.
 
 #### Type is set using variable fonts
-There are two fonts used on the site. As variable fonts, they offer a wide range of weights at a very low file size. They’ve been optimized before being `base64`’d into the CSS file itself — decently small enough and definitely important enough to do so.
+There are two fonts used on the site. As variable fonts, they offer a wide range of weights at a very low file size. They have been optimized before being `base64`’d into the CSS file itself — the site is simple enough where the fonts can be baked into the main site’s styles to avoid network requests and styling flashes.
+
 
 ## Miscellany
 
