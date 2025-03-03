@@ -1,0 +1,9 @@
+@use "utilities" as *;
+
+.br {
+	display: none;
+	
+	@include at-least(w2) {
+		display: inline;
+	}
+}
