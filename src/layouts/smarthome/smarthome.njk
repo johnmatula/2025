@@ -1,15 +1,20 @@
 ---
 layout: _base/base.njk
 stylehref: /css/smarthome.css
+
+themecolorLight: '#e9e7e5'
+themecolorDark: 	'#121110'
 ---
 
 
 {% block content %}
 {% include "../../blocks/navigation/navigation.njk" %}
 
-<main class="columns">
-  
-  {{ content | safe }}
-  
+<main class="content" x-data="smarthome()" x-init="updateClocks">
+  <div class="content__contents">
+    {{ content | safe }}
+  </div>
 </main>
 {% endblock %}
+{% include "../../blocks/footer/footer.njk" %}
+    
