@@ -1,0 +1,126 @@
+---
+title: Smarthome
+titletag: Smarthome  ╱  John Matula
+
+permalink: /smarthome/index.html
+
+ogdesc: The control system I built and designed to work my smart devices.
+
+
+ogimage: /assets/og/og-smarthome.png
+
+layout: smarthome/smarthome.njk
+footer: Thanks for lending me 550 kB!
+---
+
+{% from "src/blocks/buttonset/buttonset.njk" import buttonsetOpen, buttonsetClose %}
+{% from "src/blocks/button/button.njk" import button %}
+{% from "src/blocks/br/br.njk" import br %}
+{% from "src/blocks/blocklink/blocklink.njk" import blocklink %}
+{% from "src/blocks/divider/divider.njk" import divider %}
+{% from "src/blocks/sprite/sprite.njk" import sprite %}
+{% from "src/blocks/heading/heading.njk" import heading %}
+
+
+{% block content %}
+
+<section class="intro">
+	{% svg "./src/assets/svg/smarthome-top.svg", "ALT", "" %}
+</section>
+
+<section class="hero">
+	<h1 class="hero__summary">Smarthome {{ br() }} controls my smart devices.{{ br() }} It’s that simple.</h1>
+</section>
+
+<section class="bigpic">
+	
+	{% svg "./src/assets/svg/smarthome-titletoleader.svg", "ALT", "smartart smartart--heroleader" %}
+	{{ sprite("/assets/sprites/smarthome.jpg", "Dining room during the day", 2, 1312, 1208, 662, 6, 644, 480, "sprite--leader sprite--roundie") }}
+
+</section>
+
+<section class="leader">
+	<p>Smarthome is my smart home project. {{br()}} The system gives me direct, daily control {{br()}} of my lights, plugs, and air conditioner.</p>
+	<p>In my system, buttons are the controls.{{br()}} I tap one to turn on a light. I also tap buttons{{br()}} to fade and dim lights, turn on sets of them, {{br()}} choose colors and tints for each bulb,{{br()}} adjust the fan, and apply modes for {{br()}} the whole apartment. Buttons offer{{br()}} these capabilities while behaving{{br()}} consistently across my place.</p>
+
+	<p>Those buttons are shown on touch panels, {{br()}} which are added to the wall of each room.{{br()}} They take the place of the apartment’s{{br()}} wall switches. They work continuously, {{br()}} adjusting to the room so that controls{{br()}} blend in with décor day and night.</p>
+	<aside class="aside">
+		{% svg "./src/assets/svg/smarthome-leaderaside.svg", "ALT", "smartart smartart--" %}
+	</aside>
+	<p>It takes smarts to use other smart homes — {{br()}}crammed control panels, finicky buttons,{{br()}} and constant managing all come to mind. {{br()}} Smarthome’s buttons are big and support {{br()}} imprecise taps. Light adjustments work{{br()}}without precisely-spoken voice commands. {{br()}} Its hardware and hub incorporate fail‑safes.</p>
+	
+	<p>It stacks up against systems off the shelf. {{br()}} It’s simpler to use than builder‑grade systems, {{br()}} quicker than opening and using smart bulb apps,{{br()}} and costs 75<span style="letter-spacing: -.175rem;"> </span>% less than new, similar setups.</p>
+	
+	<p>Most of all, Smarthome handles life’s variety.{{br()}} When I need quick light, I’m throwing a party, {{br()}}or the power is out and I’d really like to <em>see</em>, {{br()}}its calm capabilities help me out.</p>
+	
+	<!-- Calculated like this: 
+	
+	[Amounts: 5 panels + 17 800-Lm + 4 100-Lm + 4 plugs + 1 A/C]
+	[Comparison: (418 * 5) + (7.5 * 17) + (11 * 4) + (4 * 10) + 180 = 2481.5]
+	[Smarthome: 600]
+	[S / C: 0.242]
+
+	The comparison panel includes software features that Smarthome does not yet support like home music control. However, these are possible (testing success!) and will be added in future app updates. -->
+	
+	
+	<p>Smarthome is the everyday system{{br()}} that makes my home delightfully smart, {{ br() }} now and for years to come.</p>
+</section>
+
+<section class="bouquet">
+	{% svg "./src/assets/svg/smarthome-bouquet.svg", "ALT", "smartart smartart--bouquet" %}
+</section>
+
+<section class="links">
+	
+	<!--<aside class="aside">secrets!
+		{% svg "./src/assets/svg/smarthome-linksaside.svg", "ALT", "smartart smartart--linksaside" %}
+	</aside>-->
+	
+	
+	{{ heading("Books", 2) }}
+	
+	{{ buttonsetOpen() }}
+	{{ button("Tech book", "/assets/pdf/SMTBK.pdf", "button--pushy button--rarr") }}
+	{{ buttonsetClose() }}
+	
+	<p class="caption">An in-depth project case study{{ br() }} including system
+architecture,{{ br() }} comparisons, panel screenshots</p>
+	
+	
+	{{ buttonsetOpen() }}
+	{{ button("Look book", "/assets/pdf/SMLBK.pdf", "button--pushy button--rarr") }}	
+	{{ buttonsetClose() }}
+	<p class="caption">Photos of button panels{{ br() }} with scenes from development {{ br() }} and the way they look in each room</p>
+
+	
+
+	<!--
+	{{ heading("Essays", 2) }}
+	<ul class="linklist">
+		{{ blocklink("Beyond a button", "#") }}
+		{{ blocklink("Platform agnostic, forever", "#") }}
+		{{ blocklink("What blip?", "./blip") }}
+		{{ blocklink("Forbidden!", "#") }}
+		{{ blocklink("Object permanence", "#") }}
+		{{ blocklink("Are you done yet?", "#") }}
+	</ul>
+	-->
+
+
+	{{ heading("More", 2) }}
+	<ul class="linklist">
+		{{ blocklink("Email john@johnmatu.la", "mailto:john@johnmatu.la?subject=Smarthome%20thoughts") }}
+		{{ blocklink("See résumés and more work", "/") }}
+	</ul>
+	
+</section>
+
+<section class="outro">
+	<div class="contents">
+		{% svg "./src/assets/svg/smarthome-corner.svg", "ALT", "smartart smartart--corner" %}
+	</div>
+</section>
+
+{{ divider("five") }}
+
+{% endblock %}

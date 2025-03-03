@@ -1,0 +1,56 @@
+---
+title: Essay
+titletag: What blip? • John Matula
+
+permalink: /smarthome/blip/index.html
+
+ogdesc: Smarthome TK
+
+ogimage: TK.png
+
+layout: default/default.njk
+
+---
+
+{% from "src/blocks/buttonset/buttonset.njk" import buttonsetOpen, buttonsetClose %}
+{% from "src/blocks/button/button.njk" import button %}
+{% from "src/blocks/br/br.njk" import br %}
+{% from "src/blocks/blocklink/blocklink.njk" import blocklink %}
+{% from "src/blocks/divider/divider.njk" import divider %}
+{% from "src/blocks/sprite/sprite.njk" import sprite %}
+{% from "src/blocks/heading/heading.njk" import heading %}
+
+
+{% block content %}
+
+<section class="hero hero--blip">
+	<div class="hero__art">
+	{% svg "./src/assets/svg/smarthome-blip.svg", "ALT", "hero__svg" %}
+	</div>
+</section>
+
+{{ divider("five", classList = "divider--blip") }}
+
+<section class="essay">
+	<p>Think about a plastic switch and how it works when the power goes out. It doesn’t do much, but it continues to serve a function.</p>
+	<p>Sure, there’s the tactile feedback of that flip-flip move to test the power. But the biggest benefit of a wall switch is how quickly things return to normal once the power comes back. Being a physical, plastic thing, a switch “remembers” which lights were on and off before things cut out, so they come back on or off as they were. No apps, logins, or hubs: electric current flows, and all’s well.</p>
+	<p>In other words, the wall switch is darn reliable across good and bad scenarios. It humbly sets a high bar of how other home control systems should work. Enter Smarthome:</p>
+	<ul>
+		<li>The whole thing runs on a local home network off of a Raspberry Pi, secure and protected from outages. When my internet cuts out, Smarthome works. Devices are locally configured, so the hub apps and lights all still chug along because they’ve been working on local intranet control the whole time.
+		</li><li>Home Assistant is the open-source hub that runs the lights, giving a common set of controls for devices of all kinds and brands. It’s extensible, so I added a feedback engine to ensure Smarthome’s buttons respond with instant feedback. This is also how it catches an ignored button press every now and then, correcting the mismatch automatically.
+		</li><li>When my power goes out fully, screens switch over to no-power mode. Using the panel’s phone battery, Smarthome’s good in that mode for several hours. Without any lights to work, the panel shows a clock, battery info, and access to a full-brightness screen light to act as a flashlight.
+		</li><li>Once internet or power is back, the system snaps back, too. Lights turn on as they were, screens go back to normal, and buttons offer control as if nothing happened.</li>
+	</ul>
+	<p>Like a light switch, Smarthome aims to be useful during times of all types.</p>
+</section>
+
+<section class="related">
+	{{ buttonsetOpen("buttonset") }}
+	{{ button("Next", "#", "button--rarr", "Forbidden!") }}
+	{{ button("Previous", "#", "button--larr", "Platform agnostic, forever") }}
+	{{ buttonsetClose() }}
+</section>
+
+{{ divider("five") }}
+
+{% endblock %}
