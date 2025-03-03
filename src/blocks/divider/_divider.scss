@@ -1,0 +1,54 @@
+@use "utilities" as *;
+
+// Trim off the subpixel fringies when art is scaled.
+
+.divider {
+	align-items: flex-start;
+	background: var(--divider-fill-bg-light);
+	display: flex;
+	grid-column: root;
+	justify-content: stretch;
+	overflow: hidden;
+	
+	@include theme(dark) {
+		background: var(--divider-fill-bg-dark);
+	}
+	
+	svg {
+		height: s(17);
+		width: 100%;
+	}
+	
+	// Use formula 32(x - 1) + 4.
+	&--one {
+		height: s(1);
+	}
+	
+	&--two {
+		height: s(5);
+	}
+	
+	&--three {
+		height: s(9);
+	}
+	
+	&--four {
+		height: s(13);
+	}
+	
+	&--five {
+		height: s(17);
+	}
+	
+	$notes: "e", "c", "a", "f", "bg", "staff";
+	
+	@each $note in $notes {
+		&__#{$note} {
+			fill: var(--divider-fill-#{$note}-light);
+			
+			@include theme(dark) {
+				fill: var(--divider-fill-#{$note}-dark);
+			}
+		}	
+	}
+}

@@ -1,0 +1,19 @@
+{% macro divider(height = "one", staffLight = "#A19D99", staffDark = "#A19D99", eLight = "none" , eDark = "none", cLight = undefined, cDark = undefined , aLight = undefined, aDark = undefined, fLight = undefined, fDark = undefined, bgLight = undefined, bgDark = undefined, classList = "" ) %}
+
+  <div class="divider divider--{{ height }} {{ classList }}" style="
+    --divider-fill-e-light: {{ eLight }};
+    --divider-fill-e-dark: {{ eDark }};
+    --divider-fill-c-light: {{ cLight | default(eLight) }};
+    --divider-fill-c-dark: {{ cDark | default(eDark) }};
+    --divider-fill-a-light: {{ aLight | default(cLight) | default(eLight) }};
+    --divider-fill-a-dark: {{ aDark | default(cDark) | default(eDark) }};
+    --divider-fill-f-light: {{ fLight | default(aLight) | default(cLight) | default(eLight) }};
+    --divider-fill-f-dark: {{ fDark | default(aDark) | default(cDark) | default(eDark) }};
+    --divider-fill-bg-light: {{ bgLight | default(fLight) | default(aLight) | default(cLight) | default(eLight) }};
+    --divider-fill-bg-dark: {{ bgDark | default(fDark) | default(aDark) | default(cDark) | default(eDark) }};
+    --divider-fill-staff-light: {{ staffLight }};
+    --divider-fill-staff-dark: {{ staffDark }};
+  ">
+    <svg height="136" viewBox="0 0 1 136" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path class="divider__e" d="M0 0h1v32h-1z"/><path class="divider__c" d="M0 32h1v32h-1z"/><path class="divider__a" d="M0 64h1v32h-1z"/><path  class="divider__f" d="M0 96h1v32h-1z"/><path class="divider__d" d="M0 131h1v5h-1z"/><path class="divider__staff" d="M0 128h1v3.5h-1zm0-32h1v3.5h-1zm0-32h1v3.5h-1zm0-32h1v3.5h-1zm0-32h1v3.5h-1z"/></g></svg>
+  </div>
+{% endmacro %}
