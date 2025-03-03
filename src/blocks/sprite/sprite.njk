@@ -1,0 +1,19 @@
+{% macro sprite(url, alt, density, width, height, xStart, yStart, sliceWidth, sliceHeight, classList = "") %}
+  
+  {% set spriteBackgroundWidth = width / sliceWidth * 100 %}
+  {% set spriteBackgroundHeight = height / sliceHeight * 100 %}
+  
+  {% set spriteWidth = sliceWidth / 16 %}
+  {% set spriteHeight = sliceHeight / 16 %}
+  
+  {% set spritePercentageWidth = spriteWidth / spriteBackgroundWidth * 100 %}
+  {% set spritePercentageHeight = spriteHeight / spriteBackgroundHeight * 100 %}
+  
+  {% set spriteXPosition = xStart / (width - sliceWidth) * 100 %}
+  {% set spriteYPosition = yStart / (height - sliceHeight) * 100 %}
+  
+  {% set spriteAspect = spriteWidth / spriteHeight %}
+
+  <div class="sprite {{classList}}" style="background: url({{url}}) {{spriteXPosition}}% {{spriteYPosition}}% / {{spriteBackgroundWidth}}% {{spriteBackgroundHeight}}% no-repeat; max-width: {{spriteWidth}}rem; max-height: {{spriteHeight}}rem; aspect-ratio: {{spriteAspect}}" class="{{classList}}"></div>
+
+{% endmacro %}
