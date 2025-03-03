@@ -35,14 +35,15 @@ $height-breakpoints: (
 
 @function rem($size) {
   $rem-size: math.div($size, 16);
-  @return #{$rem-size}rem;
+  @return $rem-size * 1rem;
 }
 
 // s
 // Returns an 8-pixel grid value of the provided unitless factor, in rems.
-// Accepts decimals (e.g., 1.5 == 20 px == 1.875 rem).
-@function s($factor) {
-  @return math.div($factor * 8rem, 16)
+// Accepts decimals (e.g., 1.5 == 20 px == 1.875 rem). Optionally accepts a
+// “nudge” amount in pixels for type in anticipation of text-spacing-trim.
+@function s($factor, $nudge: 0) {
+  @return (math.div($factor * 8rem, 16) + rem($nudge));
 }
 
 
@@ -124,15 +125,30 @@ $height-breakpoints: (
 //  • grading-spacing-delta, 100s scale (optional; similar for letter-spacing)
 //  • font family, string
 
-@mixin typography($font-weight, $font-size, $line-height, $letter-spacing: null, $grading-weight-delta: 0, $grading-spacing-delta: 0, $font-family: null) {
+@mixin typography($font-weight, $font-size, $line-height, $letter-spacing: null, $grading-weight-delta: null, $grading-spacing-delta: null, $font-family: null) {
   @if ($font-family) {
     font-family: $font-family;
   }
+  
   @if ($letter-spacing) {
     letter-spacing: $letter-spacing;
+    
+    @if($grading-spacing-delta) {
+      @include theme(dark) {
+        letter-spacing: $letter-spacing + $grading-spacing-delta;
+      }
+    }
   }
+  
   font-size: $font-size;
   font-weight: $font-weight;
+  
+  @if($grading-weight-delta) {
+    @include theme(dark) {
+      font-weight: $font-weight + $grading-weight-delta;
+    }
+  }
+  
   line-height: $line-height;
 }
 
@@ -143,14 +159,14 @@ $height-breakpoints: (
 // responds to all pointer events as its ancestor element. Its ancestor element
 // (usually its parent) needs position: relative; to position this correctly.
 
-@mixin pseudo-overlay() {
-  bottom: 0;
+@mixin pseudo-overlay($top: 0, $right: 0, $bottom: 0, $left: 0) {
+  bottom: $bottom;
   content: '';
   display: block;
-  left: 0;
+  left: $left;
   position: absolute;
-  right: 0;
-  top: 0;
+  right: $right;
+  top: $top;
 }
 
 
@@ -169,7 +185,7 @@ $height-breakpoints: (
   @if($offsetY != null) { $y: rem($offsetY) }
   
   bottom: $y;
-  border-radius: 2px;
+  border-radius: 2rpx;
   content: '';
   display: block;
   left: $x;
@@ -217,31 +233,42 @@ $height-breakpoints: (
 //             === 2px, or one full pixel of overlap at each “seam”
 //
 // Buffers and overlaps are needed so that zoomed interfaces work properly.
-@mixin smooth-box($radius, $safe: null, $overlap: null) {
-  $s: $safe or math.ceil(0.35 * $radius);
-  $r: $s + $radius;
-  $o: $overlap or 2;
+@mixin smooth-box($ne: null, $nw: null, $sw: null, $se: null, $safe: 4, $overlap: 2) {
+  $s: $safe;
+  $rNE: $ne + $s;
+  $rNW: $nw + $s;
+  $rSW: $sw + $s;
+  $rSE: $se + $s;
+  $o: $overlap;
   
   // Uses a placeholder selector for the behemoth mask image property.
   // The same image stack is used and scaled for each specified radius size.
   // The stack is ordered: (1) top left, (2) top right, (3) bottom right,
-  // (4) bottom left, (5) horizontal cross rect, (6) vertical cross rect.
+  // (4) bottom left, (5) horizontal cross section, (6) vertical cross section.
   @extend %smooth-box-mask;
+  
+  // TODO: Refactor to support asymmetric corners. Here’s one idea: dupe the
+  // existing cross rects so that there is a segment for each side of the rect.
+  // The four cross rects are sized in their inline and block directions to
+  // span the length of the parent, minus the lengths of the two curves on that
+  // given axis (replacing the 2× multiplication currently used). Each of the
+  // four sides will overlap to patch up gaps that asymmetric curve sizes cause
+  // without bleeding into those curves.
   
   mask-position:
     0% 0%,
     100% 0%,
     100% 100%,
     0 100%,
-    0 rem($r - $o),
-    rem($r - $o) 0;
+    0 rem($rNE - $o),
+    rem($rNE - $o) 0;
   mask-size:
-    rem($r) rem($r),
-    rem($r) rem($r),
-    rem($r) rem($r),
-    rem($r) rem($r),
-    101% calc(100% - #{rem(2 * $r)} + #{rem(2 * $o)}),
-    calc(100% - #{rem(2 * $r)} + #{rem(2 * $o)}) 101%;
+    rem($rNE) rem($rNE),
+    rem($rNW) rem($rNW),
+    rem($rSW) rem($rSW),
+    rem($rSE) rem($rSE),
+    calc(100% + #{rem(2 * $o)}) calc(100% - #{rem($rNE)} - #{rem($rSE)} + #{rem(2 * $o)}),
+    calc(100% - #{rem($rNE)} - #{rem($rNW)} + #{rem(2 * $o)}) calc(100% + #{rem(2 * $o)});
 }
 
 %smooth-box-mask {

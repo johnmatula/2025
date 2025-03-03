@@ -13,8 +13,7 @@
     display: grid;
     grid-template-columns:
       [root-start]
-      calc(var(--root-margin) + env(safe-area-inset-left
-      ))
+      calc(var(--root-margin) + env(safe-area-inset-left))
       [minor-start major-start]
       auto
       [minor-end major-end]
@@ -29,7 +28,7 @@
         [minor-start]
         1fr
         [minor-end]
-        var(--root-margin)
+        var(--root-gap)
         [major-start]
         2fr
         [major-end]
@@ -44,9 +43,24 @@
         [minor-start]
         1fr
         [minor-end]
-        var(--root-margin)
+        var(--root-gap)
         [major-start]
         3fr
+        [major-end]
+        calc(var(--root-margin) + env(safe-area-inset-right))
+        [root-end];
+    }
+    
+    @include at-least(w3) {
+      grid-template-columns:
+        [root-start]
+        calc(var(--root-margin) + env(safe-area-inset-left))
+        [minor-start]
+        1fr
+        [minor-end]
+        var(--root-gap)
+        [major-start]
+        2fr
         [major-end]
         calc(var(--root-margin) + env(safe-area-inset-right))
         [root-end];

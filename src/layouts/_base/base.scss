@@ -1,18 +1,11 @@
-@use "utilities" as *;
+@forward "utilities";
 
-//@use "../templates/case-study/case-study";
-//@use "../../templates/home/home";
-
-@use "content/content";
-@use "navigation/navigation";
-@use "button/button";
-/*@use "../components/footer/footer";
-@use "../components/aside/aside";
-@use "../components/details/details";
-@use "../components/gallery/gallery";
-@use "../components/hero/hero";
-@use "../components/retrospective/retrospective";
-@use "../components/related/related";
-@use "../components/section-header/section-header";
-@use "../components/lead-in/lead-in";
-*/
+@forward "heading/heading";
+@forward "navigation/navigation";
+@forward "br/br";
+@forward "button/button";
+@forward "buttonset/buttonset";
+@forward "blocklink/blocklink";
+@forward "divider/divider";
+@forward "sprite/sprite";
+@forward "footer/footer";

@@ -31,21 +31,26 @@ $root-max-width: s(175);
     
     // Margin
     --root-margin: #{s(4)};
+    --root-gap: #{s(4)};
     
     @include at-least(w0) {
       --root-margin: #{s(5)};
+      --root-gap: #{s(5)};
     }
     
     @include at-least(w1) {
       --root-margin: #{s(4)};
+      --root-gap: #{s(6)};
     }
     
     @include at-least(w2) {
       --root-margin: #{s(6)};
+      --root-gap: #{s(6)};
     }
     
     @include at-least(w3) {
       --root-margin: #{s(10)};
+      --root-gap: #{s(8)};
     }
   }
 }
@@ -58,12 +63,14 @@ $root-max-width: s(175);
 
     $hue-white: #fff;
     $hue-black: #000;
+    $hue-transparent: #0000;
     
     $hue-neutral-ff: #f5f3f1;
     $hue-neutral-cc: #e9e7e5;
     $hue-neutral-99: #cdcac7;
     $hue-neutral-66: #a19d99;
     $hue-neutral-33: #524f4c;
+    $hue-neutral-18: #2B2927;
     $hue-neutral-00: #121110;
     
     $hue-orange-ff: #fe8676;
@@ -72,6 +79,13 @@ $root-max-width: s(175);
     $hue-orange-66: #bf240f;
     $hue-orange-33: #9d1907;
     $hue-orange-00: #5c0d03;
+    
+    $hue-gold-66: #d76d00;
+    $hue-gold-99: #f08830;
+    $hue-gold-cc: #fa9b4b;
+    $hue-gold-ff: #ffb072;
+    
+    // Legacyyy
     
     $hue-lime-ff: #e3fc42;
     $hue-lime-cc: #d5f029;
@@ -87,12 +101,12 @@ $root-max-width: s(175);
     $hue-cyan-33: #0b9182;
     $hue-cyan-00: #01574e;
     
-    $hue-purple-ff: #d5a1f7;
-    $hue-purple-cc: #c177f2;
-    $hue-purple-99: #b05ae6;
-    $hue-purple-66: #993bd4;
-    $hue-purple-33: #7222a3;
-    $hue-purple-00: #540c7f;
+    $hue-oldpurple-ff: #d5a1f7;
+    $hue-oldpurple-cc: #c177f2;
+    $hue-oldpurple-99: #b05ae6;
+    $hue-oldpurple-66: #9b3fd4;
+    $hue-oldpurple-33: #7222a3;
+    $hue-oldpurple-00: #540c7f;
     
     $hue-darkerlucent-ff: #f0f0f040;
     $hue-lighterlucent-ff: #f0f0f040;
