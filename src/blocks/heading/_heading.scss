@@ -1,0 +1,9 @@
+@use "utilities" as *;
+
+.heading {
+	grid-column: minor;
+}
+
+.headingspacer {
+	grid-column: major;
+}

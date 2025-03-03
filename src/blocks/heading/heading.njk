@@ -1,0 +1,5 @@
+{% macro heading(text, level, padding = 0, classList = "") %}
+{% set s = padding * 8 / 16 %}
+<h{{level}} class="heading {{classList}}">{{text | safe}}</h{{level}}>
+<span class="headingspacer"></span>
+{% endmacro %}
