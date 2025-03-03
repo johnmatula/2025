@@ -1,17 +1,24 @@
 ---
 title: Page not found
-titletag: Once upon a 404
+titletag: John Matula  ╱  Once upon a 404...
 
 layout: default/default.njk
 
 permalink: /404.html
+
+themecolor: #101112
+
+ogdesc: This page couldn’t be found.
 ---
 
 
 
 {% block content %}
 
-{% svg "./src/assets/svg/home-art.svg", "John does design, web, and talent.", "hero" %}
+<section class="general">
+	<p>Well hm, sorry about this. I’ll find this page and get back to you.</p>
+	<p><a href="/">&larr; Home</a></p>
+</section>
 
 
 {% endblock %}
