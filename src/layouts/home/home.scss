@@ -1,1 +1,241 @@
 @use "../_base/base" as *;
+@use "_layout" as *;
+
+:root {
+	--fill-page: #{$hue-neutral-99};
+	--color-text: #{$hue-neutral-33};
+	
+	@include theme(dark) {
+		--fill-page: #{$hue-neutral-99};
+		--color-text: #{$hue-neutral-33};
+	}
+}
+
+.content {
+	@include typography(460, $t0, s(3.5), rem(-.02), 20, rem(.007));
+	
+	align-items: stretch;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	font-feature-settings: 'pnum' 1;
+	
+	&__contents {
+		flex: 0 0 auto;
+		flex-direction: column;
+	}
+}
+
+section {
+	@extend %layout-base;
+}
+
+.heading {
+	@include typography(680, $t0, s(3), rem(-.06));
+	
+	color: $hue-neutral-00;
+	
+	@include at-least(w1) {
+		text-align: right;
+	}
+}
+
+p, .sprite, .buttonset, .linklist {
+	grid-column: major;
+}
+
+
+// Sections and their spacings and type
+.navigation .topbar {
+	background: $hue-neutral-99;
+	box-shadow: none;
+}
+
+.navigation .topbar::after {
+	@include backdrop-filter(grayscale(97%) brightness(92.7%) contrast(98%) sepia(7%));
+}
+
+.breadcrumb__current {
+	display: none;
+}
+
+.hero {
+	position: relative;
+	
+	&__lines {
+		display: none;
+		background: $hue-neutral-66;
+		position: absolute;
+		left: 0;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		
+		svg {
+			width: 100%;
+		}
+		
+		@include at-least(w0) {
+			display: block;
+		}
+	}
+	
+	&__art {
+		display: block;
+		grid-column: root;
+		position: relative;
+		
+		@include at-least(w0) {
+			justify-content: center;
+			display: flex;
+		}
+		
+		@include at-least(w1) {
+			grid-column: major / root;
+			justify-content: flex-start;
+		}
+	}
+	
+	svg {
+		max-height: rem(520 / 3 * 2);
+	}
+	
+	@include at-least(w0) {
+		svg {
+			max-height: none;
+			height: rem(520 / 3 * 2);
+		}
+	}
+	
+	@include at-least(w1) {
+		margin: 0 0 0 s(-24);
+		max-width: calc(100% + #{s(24)});
+		width: calc(100% + #{s(24)});
+		
+		svg {
+			height: rem(520 / 4 * 3);
+		}
+	}
+	
+	@include at-least(w2) {
+		margin: 0 0 0 s(-29);
+		max-width: calc(100% + #{s(29)});
+		width: calc(100% + #{s(29)});
+		
+		svg {
+			height: rem(520);
+		}
+	}
+	
+	@include at-least(w3) {
+		margin: 0 0 0 s(-34);
+		max-width: calc(100% + #{s(34)});
+		width: calc(100% + #{s(34)});
+	}
+}
+
+.leader {
+	@include typography(680, $t0, s(3.5), rem(.04));
+	
+	background-color: $hue-neutral-00;
+	color: $hue-neutral-99;
+	padding: s(15) 0 0;
+	
+	.leader--accent, a {
+		color: $hue-neutral-ff;
+	}
+	
+	p ~ p {
+		padding: s(3.5) 0 0;
+	}
+
+	.sprite {
+		display: none;
+		
+		@include at-least(w1) {
+			align-self: self-end;
+			display: block;
+			grid-column: minor;
+			justify-self: end;
+			width: 100%;
+		}
+	}
+	
+	.divider {
+		background: $hue-neutral-99;
+		margin: s(15) 0 0;
+		
+		.divider__e {
+			fill: $hue-neutral-00;
+		}
+	}
+}
+
+.featured {
+	@include typography(540, $t0, s(3.5), rem(-.02));
+	
+	margin: s(15) 0 0;
+	
+	p {
+		margin: s(1) 0 0;
+	}
+	
+	.sprite {
+		margin: s(8) s(-1) 0;
+		max-width: none;
+	}
+	
+	.divider {
+		margin: s(15) 0 0;
+	}
+}
+
+.links {
+	@include typography(540, $t0, s(3.5), rem(-.02));
+	
+	margin: s(13) 0 0;
+	
+	* ~ .heading {
+		margin: s(10) 0 0;
+	}
+	
+	p, .linklist {
+		margin: s(1) 0 0;
+	}
+	
+	.linklist__slash {
+		font-weight: 400;
+	}
+	
+	.heading ~ .buttonset {
+		margin: s(2) s(-1) 0;
+	}
+	
+	.divider {
+		background: $hue-neutral-00;
+		margin: s(10) 0 0;
+		
+		.divider__e, .divider__c, .divider__a {
+			fill: $hue-neutral-99;
+		}
+	}
+	
+	a.button--plain {
+		background-color: $hue-neutral-cc;
+		color: $hue-neutral-00;
+	}
+	
+	.blocklink__li {
+		line-height: s(3);
+	}
+	
+	.blocklink__li + .blocklink__li {
+		line-height: s(3);
+		margin-top: s(1.5);
+	}
+}
+
+.footer {
+	background: $hue-neutral-00;
+	color: $hue-neutral-66;
+}

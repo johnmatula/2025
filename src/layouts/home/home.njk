@@ -1,15 +1,16 @@
 ---
 layout: _base/base.njk
 stylehref: /css/home.css
-titletag: "John Matula  |  Design Web Talent"
 ---
 
 
-
 {% block content %}
-<main class="columns">
-  {% include "../../blocks/navigation/navigation.njk" %}
-  
-  {{ content | safe }}
+{% include "../../blocks/navigation/navigation.njk" %}
+
+<main class="content">
+  <div class="content__contents">
+    {{ content | safe }}
+  </div>
 </main>
 {% endblock %}
+{% include "../../blocks/footer/footer.njk" %}
