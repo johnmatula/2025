@@ -1,0 +1,21 @@
+@use "utilities" as *;
+
+.footer {
+	@include typography(580, $t-1, s(2), rem(.027));
+	
+	flex: 0 0 auto;
+	font-feature-settings: 'pnum' 1;
+	padding: s(7) 0 s(9);
+	
+	&__contents {
+		@extend %layout-base;
+		
+		p {
+			grid-column: major;
+		}
+		
+		p + p {
+			margin-top: s(1);
+		}
+	}
+}
