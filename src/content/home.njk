@@ -1,21 +1,103 @@
 ---
 title: Home
-titletag: John Matula
+titletag: John Matula  ╱  Design  Web  &  Talent
+
+themecolor: #101112
 
 layout: home/home.njk
 
 permalink: /index.html
 
-ogdesc: I’m John, a human! I’m here for graphic design; websites and accessibility audits; and talent work in piano, singing, acting, and voiceovers.
+ogdesc: I’m John, a human! I’m a design leader experienced in building web products and supporting happy clients. I’m also a pianist, actor and vocal performer.
 
 ogimage: /assets/og/og-home.png
 ---
 
+{% from "src/blocks/buttonset/buttonset.njk" import buttonsetOpen, buttonsetClose %}
+{% from "src/blocks/button/button.njk" import button %}
+{% from "src/blocks/br/br.njk" import br %}
+{% from "src/blocks/blocklink/blocklink.njk" import blocklink %}
+{% from "src/blocks/divider/divider.njk" import divider %}
+{% from "src/blocks/sprite/sprite.njk" import sprite %}
+{% from "src/blocks/heading/heading.njk" import heading %}
 
 
 {% block content %}
 
-{% svg "./src/assets/svg/home-art.svg", "John does design, web, and talent.", "hero" %}
+<section class="hero">
+	<div class="hero__lines">
+		{% svg "./src/assets/svg/home-lines.svg", "", "hero__lines" %}
+	</div>
+	<div class="hero__art">
+		{% svg "./src/assets/svg/home-art.svg", "John does design, web, and talent.", "hero__svg" %}
+	</div>
+</section>
 
+<section class="leader">
+	<p>
+		<span class="leader--accent">John Matula is a human.</span> He is a{{ br() }}life‑long learner of design and technology.{{ br() }} His passion is systems: how they are built,{{ br() }}the way they are used, and the utility they offer. {{ br() }} He has led design teams for six years, both guiding{{ br() }}and delivering product mockups, interaction flows,{{ br() }}branded websites, and design documentation.{{ br() }}Complex environments are his specialty.</p>
+
+	<p>
+		John takes on Systems Design and{{ br() }} Website Design and Audit projects{{ br() }} through his freelance business, JM Creative.{{ br() }} On a contract basis, he also happily accepts {{ br() }} Piano, Acting, and Vocal Performance work.</p>
+	{{ sprite("/assets/sprites/home.jpg", "John’s face", 2, 676, 428, 4, 4, 136, 146, "sprite--leader sprite--roundie") }}
+	<p>Outside of that, you’ll find him{{ br() }}taking a hike, catching up on Drag Race España,{{ br() }}or designing too many playlist thumbnails.
+	</p>
+	
+	{{ divider("five") }}
+	
+</section>
+
+<section class="featured">
+	{{ heading("Featured", 2) }}
+	
+	<p>
+		<a href="/smarthome/">Smarthome</a>
+	</p>
+	<p>
+		The system I made for my apartment {{ br() }} to flip smart switches, change and dim lights,{{ br() }} and set the air conditioner. They provide full,{{ br() }} daily smart device control without having to use{{ br() }} passwords, voice assistants, or smartphone apps.{{ br() }} These buttons set a smooth standard.
+	</p>
+	{{ sprite("/assets/sprites/home.jpg", "View of Smarthome in the kitchen", 2, 676, 428, 148, 4, 524, 420, "sprite--featured sprite--roundie") }}
+	
+	{{ divider("one") }}
+</section>
+
+
+<section class="links">
+	{{ heading("Résumés", 2) }}
+	
+	{{ buttonsetOpen() }}
+		{{ button("Design and web", "/assets/pdf/JohnMatula_resume.pdf", "button--pushy button--rarr") }}
+		{{ button("Talent", "/assets/pdf/JohnMatula_headshot.pdf", "button--pushy button--rarr" ) }}
+	{{ buttonsetClose() }}
+	
+	{{ heading("Contact", 2) }}
+	
+	{{  buttonsetOpen() }}
+	{{ button("Email john@johnmatu.la", "mailto:john@johnmatu.la?subject=Hello%20from%20your%20website", "button--plain button--rarr") }}
+	{{ button("Open LinkedIn", "https://www.linkedin.com/in/johnmatula/", "button--plain button--rarr") }}
+	{{ button("Open GitHub", "https://www.github.com/johnmatula/", "button--plain button--rarr") }}
+	{{ buttonsetClose() }}
+	
+
+	
+	{{ heading("Work", 2) }}
+	<ul class="linklist">
+		{{ blocklink("JM Creative <span class=\"linklist__slash\"> / </span> Brand guidelines", "/assets/pdf/BRAND.pdf") }}
+		{{ blocklink("Smarthome <span class=\"linklist__slash\"> / </span> Product case study", "/smarthome/") }}
+		{{ blocklink("Oracle <span class=\"linklist__slash\"> / </span> Ascent Rewards demo for sales use", "https://1.ascentrewards.co") }}
+		{{ blocklink("Oracle <span class=\"linklist__slash\"> / </span> Certified Angus Beef Steakholder Rewards", "https://rewards.certifiedangusbeef.com") }}
+		{{ blocklink("U‑M <span class=\"linklist__slash\"> / </span> Rec Sports intro deck", "/assets/pdf/UMREC.pdf") }}
+		{{ blocklink("Personal <span class=\"linklist__slash\"> / </span> Career day website for middle schoolers", "https://careerday.johnmatu.la/") }}
+		<!--{{ blocklink("Personal<span class=\"linklist__slash\"> / </span> Career day website presentation", "/assets/pdf/UMCES.pdf") }} -->
+		<!--{{ blocklink("JM Creative brand guidelines", "#") }}
+		{{ blocklink("60-second talent reel", "#") }}-->
+	</ul>
+	<p><br>I can meet one‑on‑one to review {{br()}} recent product wireframes and user flows.</p>
+	
+	{{ heading("Earrings", 2) }}
+		<p>Right now, gold studs.<br>Up next, little green oak leaves.</p>
+	
+	{{ divider("five") }}
+</section>
 
 {% endblock %}
