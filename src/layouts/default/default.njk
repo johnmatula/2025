@@ -20,8 +20,9 @@ stylehref: /css/default.css
 {% include "../../blocks/navigation/navigation.njk" %}
 
 <main class="content">
-  
-  {{ content | safe }}
-  
+  <div class="content__contents">
+    {{ content | safe }}
+  </div>
 </main>
+{% include "../../blocks/footer/footer.njk" %}
 {% endblock %}
