@@ -1,6 +1,9 @@
 ---
 titletag: Works
 
+themecolorLight: lime
+themecolorDark: rebeccapurple
+
 permalink: /works/index.html
 
 ogdesc: Works KTKTK
@@ -10,22 +13,10 @@ ogimage: /img/og-works.png
 layout: default/default.njk
 ---
 
+{% from "src/blocks/buttonset/buttonset.njk" import buttonsetOpen, buttonsetClose %}
 {% from "src/blocks/button/button.njk" import button %}
+{% from "src/blocks/divider/divider.njk" import divider %}
+{% from "src/blocks/sprite/sprite.njk" import sprite %}
+{% from "src/blocks/heading/heading.njk" import heading %}
 
-
-<h1>Test!</h1>
-
-<p>I’m cramming some content in here. Get ready for headers.</p>
-
-<h2>Gutter</h2>
-
-<p>It was less that the substance of the material was sticky, but rather that the substance was a {% italics "cold" %} and sticky substance. How could it be {% italics "both" %}?!</p>
-
-<h2>Testing</h2>
-
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus at erat accumsan, efficitur orci ut, facilisis lorem. Suspendisse a posuere odio. Mauris dui lacus, dapibus eget diam nec, malesuada tincidunt purus. Suspendisse interdum hendrerit justo, ac venenatis sem euismod vel.</p>
-{{ button("I’m a macro button!","#") }}
-{{ button("Download résumé","#","button--pushy button--left button--rarr") }}
-<p>Sed non pellentesque nisl, in tincidunt libero. Vivamus varius semper erat, ultricies scelerisque sapien malesuada id. Pellentesque ultrices, felis sed bibendum mattis, leo leo facilisis purus, at feugiat odio lectus sed diam.</p>
-<p>Aenean gravida libero non mauris euismod consectetur. Nullam accumsan elementum velit. Morbi ultrices nisi non urna tristique, eget sagittis mauris mollis.</p>
-<p>Quisque auctor purus vel nunc maximus, eget tristique quam suscipit. Aliquam erat volutpat. Morbi ut ligula elementum, fermentum erat vitae, sollicitudin nisi. Maecenas in nunc sed mi luctus pharetra ut non enim. Ut egestas tristique orci, eu luctus diam porta at. Donec tristique augue id dolor commodo sollicitudin.Morbi in turpis nisl. Donec eleifend dignissim est, eu varius risus cursus at. Phasellus ultricies eros ut diam mattis volutpat. Ut dignissim massa libero, eget pretium sem lacinia sed. Aliquam metus mauris, aliquet at venenatis pulvinar, convallis nec nunc. In hac habitasse platea dictumst.</p>
+<p>Currently 302’d away.</p>
