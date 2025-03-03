@@ -28,9 +28,7 @@ The [top bar](https://github.com/johnmatula/2025/blob/main/src/blocks/navigation
 #### Custom easing functions refine transitions
 I used a custom `cubic-bezier` function to control the easing curve of each transition, used in place of one of the `ease` function keywords. This is a simple site, so the way transitions work are noticeable.
 
-For instance, the “pushy” button style mimics how a plastic arcade button works (`cubic-bezier(0.22, 1.28, 0.62, 1)`), pressing into the page (the arcade cabinet) and jolting back out to rest (as if by a spring).
-
-This detail makes for as enticing of a primary button as possible, which is why it’s used for important actions like to  [download my résumé](https://johnmatu.la/assets/pdf/JohnMatula_resume.pdf).
+For instance, the “pushy” button style mimics how a plastic arcade button works (`cubic-bezier(0.22, 1.28, 0.62, 1)`), pressing into the page (the arcade cabinet) and jolting back out to rest (as if by a spring). This detail makes for as enticing of a primary button as possible, which is why it’s used for important actions like to  [download my résumé](https://johnmatu.la/assets/pdf/JohnMatula_resume.pdf).
 
 
 ### Low network usage
@@ -46,7 +44,7 @@ Art and content is represented with plain text and vector art. Raster images are
 #### Type is set with variable fonts
 There are two fonts used on the site. As variable fonts, they offer a gradation of weights at a very low file size. They have been optimized before being `base64`’d into the CSS file itself.
 
-To emphasize that, the fonts are baked right into the stylesheet — they’re included like that because of how important they are to the site. At the cost of a heavier stylesheet, two additional network requests are and initial styling flashes are avoided.
+To emphasize that, the fonts are baked right into the stylesheet — they’re included like that because of how important they are to the site. At the cost of a heavier stylesheet, this avoids two additional network requests and initial styling flashes.
 
 
 ## Miscellany
