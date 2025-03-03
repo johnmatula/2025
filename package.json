@@ -14,10 +14,10 @@
     "watch:js": "onchange 'src/blocks/**/*.js' 'src/layouts/**/*.js' -- npm run dev:js",
     "start": "npm run clean && npm-run-all dev:sass dev:js --parallel watch:sass watch:js watch:eleventy",
     "prod:sass": "npm run dev:sass -- --style=compressed --no-source-map",
-    "prod:postcss": "postcss tmp/scss/**/*.css -u autoprefixer -m --dir tmp/postcss",
+    "prod:postcss": "postcss tmp/scss/**/*.css -u autoprefixer -u postcss-combine-media-query -m --dir tmp/postcss",
     "prod:js": "babel src --out-file tmp/babeljs/main.js --ignore 'src/internals/**/*.js' --ignore 'src/content/*.js'",
-    "prod:html": "html-minifier --input-dir dist --output-dir dist --file-ext html --collapse-whitespace --remove-comments --remove-script-type-attributes --remove-tag-whitespace  --minify-css true --minify-js true",
-    "prod": "npm run clean && npm-run-all prod:sass prod:postcss prod:js && NODE_ENV=prod eleventy && npm run minify:html"
+    "prod:html": "html-minifier --input-dir dist --output-dir dist --file-ext html --remove-comments --remove-script-type-attributes --remove-tag-whitespace  --minify-css true --minify-js true",
+    "prod": "npm run clean && npm-run-all prod:sass prod:postcss prod:js && NODE_ENV=prod eleventy && npm run prod:html"
   },
   "repository": {
     "type": "git",
@@ -61,6 +61,7 @@
     "autoprefixer": "^10.4.20",
     "npm-run-all": "^4.1.5",
     "postcss-cli": "^11.0.0",
+    "postcss-combine-media-query": "^1.0.1",
     "sass": "^1.32.8"
   }
 }
