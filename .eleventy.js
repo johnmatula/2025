@@ -16,9 +16,11 @@ module.exports = (function(eleventyConfig) {
 
   if(env === "prod") {
     eleventyConfig.addPassthroughCopy({ "tmp/postcss": "css" });
+    eleventyConfig.addPassthroughCopy({ ".htaccess-prod": ".htaccess" });
   } else {
     eleventyConfig.addPassthroughCopy({ "tmp/scss/**/*.css": "css" });
     eleventyConfig.addPassthroughCopy({ "tmp/scss/**/*.css.map": "css" });
+    eleventyConfig.addPassthroughCopy({ ".htaccess-dev": ".htaccess" });
   }
   eleventyConfig.addPassthroughCopy({ "tmp/babeljs": "js" });
   eleventyConfig.addPassthroughCopy({ "src/internals/favicon": "/" });
@@ -85,17 +87,18 @@ module.exports = (function(eleventyConfig) {
     return o.trim() + "</span>";
   })
   
-  eleventyConfig.addNunjucksAsyncShortcode('svg', async (src, label, className/*, alt, sizes*/) => {
+  eleventyConfig.addNunjucksAsyncShortcode('svg', async (src, label, className, height/*, alt, sizes*/) => {
     let metadata = await Image(src, {
       formats: ['svg'],
       dryRun: true,
     })
     
     var css = className ? `class="${className}" ` : ``;
-    var attrs = ` aria-label="${label}" ${css}`;
+    var height = height ? ` style="height:${height}"` : ``;
+    var attrs = ''; //` aria-label="${label}" ${css}`;
 
     var tag = metadata.svg[0].buffer.toString()
-    return tag.slice(0, 4) + attrs + tag.slice(4);
+    return tag.slice(0, 4) + attrs + height + tag.slice(4);
   })
   
   /* To Title Case © 2018 David Gouch | https://github.com/gouch/to-title-case */
