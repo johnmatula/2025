@@ -1,0 +1,18 @@
+@use "utilities" as *;
+
+.blocklink__li {
+  list-style: none;
+  
+  & + & {
+    margin: s(1) 0 0;
+  }
+}
+
+a.blocklink {
+  display: inline-block;
+  position: relative;
+  
+  &::before {
+    @include pseudo-link-offset;
+  }
+}

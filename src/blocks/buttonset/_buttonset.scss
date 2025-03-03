@@ -1,0 +1,25 @@
+@use "utilities" as *;
+
+.buttonset {
+  display: flex;
+  margin: s(2) s(-1);
+  max-width: calc(100% + #{s(2)});
+  
+  &__buttons {
+    display: flex;
+    flex: 1 1 100%;
+    flex-direction: column;
+    
+    @include at-least(w1) {
+      flex: 0 0 auto;
+    }
+  }
+  
+  a + a {
+    margin: s(1) 0 0;
+  }
+  
+  a.button--pushy + a {
+    margin: s(2) 0 0;
+  }
+}

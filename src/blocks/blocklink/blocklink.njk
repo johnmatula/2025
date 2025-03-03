@@ -1,0 +1,7 @@
+{% macro blocklink(label, link, classList = "") %}
+  <li class="blocklink__li">
+    <a class="blocklink {{classList}}" href="{{link}}">
+      <span>{{label | safe}}</span>
+    </a>
+  </li>
+{% endmacro %}
