@@ -5,6 +5,6 @@ dist
 dist-dev
 dist-prod
 .DS_Store
-src/assets/pdf/JohnMatula_resume.pdf
+src/assets/pdf
 *.tmp.html
 *.tmp.md
