@@ -4,29 +4,28 @@
 -->
 
 <div class="navigation">
-  <!--div class="logo">
-    {% svg "./src/assets/svg/site-logo.svg", "John does design, web, and talent.", "logo__svg" %}
-  </div-->
   <div class="topbar">
     <div class="topbar__contents">
       <a aria-label="Return to home" href="/" class="home">
-        <span class="home__logospace" aria-hidden="true">
-          {% svg "./src/assets/svg/site-logo.svg", "TODO: Remove this temp placement with the overlapped version instead", "home__svg" %}
-        </span>
         <span class="home__label">Home</span>
+        <span class="home__logo" aria-hidden="true">
+          {% svg "./src/assets/svg/site-logo.svg", "JM logo", "home__svg" %}
+        </span>
       </a>
       <nav aria-label="Breadcrumb" class="breadcrumbs">
         <ul>
-          {% for crumb in breadcrumb %}
-          <li>
-            <a
-              href="{{crumb.url}}"
-              {% if loop.last %} aria-current="page" {% endif %}
-            >
-              {{crumb.name}}
-            </a>
-          </li>
-          {% endfor %}
+          {% if breadcrumb.length < 2 %}
+            <li class="crumbspace" aria-hidden="true"></li>
+          {% else %}
+            {% for crumb in breadcrumb %}
+            {% if loop.last == false %}
+            <li>
+              <a href="{{crumb.url}}">{{crumb.name}}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+          {% endif %}
+          <li class="breadcrumb__current" aria-current="page">{{ title }}</li>
         </ul>
       </nav>
     </div>

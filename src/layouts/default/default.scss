@@ -1,12 +1,179 @@
 @use "../_base/base" as *;
 @use "_layout" as *;
 
-.content {
-	h1, h2, h3, h4, h5, h6 {
-		grid-column: minor;
-	}
+:root {
+	--fill-page: #{$hue-neutral-cc};
+	--color-text: #{$hue-neutral-00};
 	
-	p, .buttonset {
-		grid-column: major;
+	--fill-navigation-out: #{rgba($hue-neutral-cc,.88)};
+	--fill-navigation-in: #{$hue-neutral-cc};
+	--fill-navigation-line: #{$hue-neutral-99};
+	
+	
+	@include theme(dark) {
+		--fill-page: #{$hue-neutral-18};
+		--color-text: #{$hue-neutral-cc};
+		
+		--fill-navigation-out: #{$hue-neutral-00};
+		--fill-navigation-in: #{$hue-neutral-00};
+		--fill-navigation-line: #{$hue-neutral-66};
 	}
 }
+
+
+.navigation {
+	color: $hue-neutral-00;
+	
+	@include theme(dark) {
+		color: $hue-neutral-ff;
+	}
+	
+	.home__svg path {
+		fill: $hue-orange-66;
+		
+		@include theme(dark) {
+			fill: $hue-orange-66;
+		}
+	}
+	
+	a {
+		@include theme(dark) {
+			color: $hue-orange-99;
+		}
+	}
+}
+
+.hero {
+	tspan {
+		fill: var(--color-text);
+	}
+	
+	.hero__art {
+		display: inline-block;
+		grid-column: root;
+		
+		@include at-least(w1) {
+			grid-column: major;
+		}
+	}
+	
+	&__svg {
+		display: inline-block;
+		grid-column: major;
+		
+		@include at-least(w0) {
+			grid-column: major / root;
+		}
+	}
+}
+
+.content {
+	@include typography(480, $t0, s(3.5), rem(-.02), 16, rem(.004));
+	
+	align-items: stretch;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	font-feature-settings: 'pnum' 1;
+	
+	&__contents {
+		align-items: stretch;
+		flex: 0 0 auto;
+		flex-direction: column;
+	}
+	
+	section {
+		@extend %layout-base;
+	}
+	
+	section.general {
+		padding: s(4) 0;
+	}
+	
+	p, ol, ul, .sprite, .heading, .linklist, .buttonset {
+		grid-column: major;
+	}
+	
+	p, li {
+		max-width: s(55);
+	}
+	
+	p ~ p, ul, li + li {
+		padding: s(3.5) 0 0;
+	}
+	
+	h1 {
+		
+	}
+	
+	h2 {
+		@include typography(580, $t2, s(5), rem(-.035), 0, 0);
+	}
+	
+	h3 {
+		
+	}
+	
+	ul {
+		margin: 0 0 0 s(4);
+	}
+	
+	li {
+		list-style: none;
+		position: relative;
+		
+		&::before {
+			background-color: currentColor;
+			text-indent: -9999px;
+			user-select: none;
+			pointer-events: none;
+			content: '•'; // for safari?
+			height: s(.25);
+			width: s(2);
+			position: absolute;
+			margin: s(1.5, 1) 0 0 s(-4);
+		}
+	}
+	
+	.subtitle {
+		@include typography(480, $t2, s(5), rem(-.043), 0, 0);
+	}
+	
+	.metadata {
+		@include typography(680, $t-1, s(1.5), rem(.12), 0, 0);
+	}
+}
+
+
+.related, .related + .divider {
+	margin: s(8) 0 0;
+}
+
+
+.hero--blip {		
+	.hero__art {
+		padding: s(12) 0 0;
+		
+		@include at-least(w1) {
+			margin: 0 0 0 s(-14);
+		}
+	}
+	
+	svg {
+		height: rem(488 / 2);
+		
+		@include at-least(w0) {
+			height: rem(408);
+		}
+	}
+}
+
+.divider--blip {
+	margin: s(-13, 2) 0 0;
+	mix-blend-mode: difference;
+}
+
+.essay {
+	padding: s(15) 0 0 0;
+}
+

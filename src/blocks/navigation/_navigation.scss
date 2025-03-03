@@ -8,7 +8,7 @@
   --fill-navigation-out: #e9e5e4;
   --fill-navigation-in: var(--fill-page-default, #f5f3f1);
   --fill-navigation-line: #a6a4a1;
-  --spacing-link-offset: -.5rem;
+  --spacing-link-offset: -.25rem;
   --radius-link-outline: 4px;
 }
 
@@ -18,6 +18,13 @@
 
 @mixin topbar-fade-in {
   transition: opacity var(--timing-fade-in) cubic-bezier(.3,0,.35,1);
+}
+
+.navigation {
+  @include typography(560, $t0, s(3), rem(-.008));
+  
+  align-items: baseline;
+  flex: 0 0 auto;
 }
 
 .navigation svg {
@@ -79,19 +86,48 @@
 
 // Intrinsic height based off this
 .home {
-  align-items: baseline;
   display: flex;
   grid-area: minor;
-  padding: s(8) 0 s(5);
+  height: s(16);
+  padding: s(6) 0 s(5);
   position: relative;
+  
+  @include at-least(w1) {
+    height: s(18);
+    padding: s(8) 0 s(5);
+  }
+  
+  path {
+    fill: $hue-orange-33;
+  }
   
   &::after {
     @include pseudo-overlay;
     @include topbar-fade-out;
+    @include smooth-box(19, 19, 19, 19);
     
-    box-shadow: var(--size-line) 0 0 0 var(--fill-navigation-line);
+    background: $hue-neutral-99;
+    display: none;
+    left: s(-4);
+    right: s(-4);
+    top: s(2);
+    bottom: s(2);
     opacity: 0;
-    pointer-events: none;
+    mix-blend-mode: darken;
+    
+    @include at-least(w1) {
+      display: block;
+      left: s(-3);
+      right: s(-3);
+      top: s(2);
+      bottom: s(2);
+    }
+    
+    @include at-least(w3) {
+      display: block;
+      left: s(-4);
+      right: s(-4);
+    }
     
     .topbar:hover &,
     .topbar:focus-within & {
@@ -99,13 +135,24 @@
       
       opacity: 1;
     }
+  }
+  
+  &:focus {
+    outline: none;
+  }
+  
+  &:focus::after {
+      box-shadow: 0 0 0 rem(6) $hue-neutral-99 inset, 0 0 0 rem(9) currentColor inset;
+      border-radius: rem(15);
   }
   
   &__label {
     @include topbar-fade-out;
     
+    flex: 1 1 100%;
     opacity: 0;
-    padding: 0 0 0 s(4);
+    padding: 0 s(4) 0 0;
+    text-align: right;
     
     .topbar:hover &,
     .topbar:focus-within & {
@@ -114,15 +161,25 @@
       opacity: 1;
     }
   }
+  
+  &__logo {
+    align-items: flex-end;
+    display: flex;
+    flex: 0 0 auto;
+    margin: 0 0 rem(-1.2);
+  }
 }
 
 .breadcrumbs {
+  align-items: stretch;
   display: flex;
   flex: 1 1 100%;
   grid-area: major;
   padding: 0;
   
   ul {
+    align-items: flex-end;
+    height: 100%;
     display: flex;
     flex-wrap: wrap;
   }
@@ -136,7 +193,7 @@
   a {
     @include topbar-fade-in;
     
-    opacity: .858;
+    opacity: 1;
     position: relative;
     
     .topbar:hover &,
@@ -147,6 +204,18 @@
     }
   }
   
+  .crumbspace {
+    flex: 1 1 100%;
+    
+    &::after {
+      content: ' ';
+    }
+  }
+  
+  li[aria-current="page"] {
+    flex: 0 0 100%;
+  }
+  
   a::before {
     @include pseudo-link-offset;
   }
@@ -155,9 +224,5 @@
     color: #524F4C;
     content: '→';
     padding: 0 .5rem;
-  }
-  
-  li[aria-current="page"] {
-    flex: 0 0 100%;
   }
 }

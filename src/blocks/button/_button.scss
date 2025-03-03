@@ -1,130 +1,276 @@
 @use "utilities" as *;
 
-.buttonset {
+// TODO: Add active state for standard buttons
+.related {
+  .button--rarr {
+    margin-left: s(6);
+    
+    @include at-least(w1) {
+      margin-left: 0;
+    }
+  }
+  
+  .button--larr {
+      margin-right: s(6);
+      
+      @include at-least(w1) {
+        margin-left: s(-6);
+        margin-right: s(6);
+      }
+  }
+}
+
+a {
+  &:focus {
+    outline: rem(2.5) solid currentColor;
+    outline-offset: rem(5);
+  }
 }
 
 a.button {
-  @include smooth-box(19);
+  @include typography(580, $t0, s(2.5), rem(.03));
+  @include smooth-box(17,17,17,17);
   
+  flex-direction: column; // >>>???????
   background: $hue-neutral-99;
-  display: inline-block;
-  padding: s(2) s(4);
+  color: $hue-neutral-00;
+  display: flex;
+  justify-content: center;
+  padding: s(2.25, 1) s(4) s(2.25, -1);
+  text-decoration: none;
   
-  // TODO: Clean up
-  // TODO: Extend to use any shape! As a bug demonstrated, other “chunky”
-  //       shapes could work well, like a block arrow, rounded star, etc.
-  &.button--pushy {
-    $button-pushy-raise: #{rem(5)};
-    $button-pushy-press: #{rem(-5)};
-    $button-pushy-time: .36s;
-    $button-pushy-ease: cubic-bezier(.22,1.28,.82,1);
+  @include theme(dark) {
+    background: $hue-neutral-33;
+    color: $hue-neutral-cc;
+  }
+  
+  &:focus {
+    box-shadow: 0 0 0 rem(6) $hue-neutral-cc inset, 0 0 0 rem(8.5) $hue-neutral-33 inset;
+    border-radius: rem(15);
+    outline: none;
     
-    
-    /* Main button text */
-    /* Use slight transparency on text color to
-        get a little benefit of the dimmed :active state */
-    
-    @include typography(540, $t1, s(3.5), rem(-0.07));
+    @include theme(dark) {
+      //box-shadow: 0 0 0 rem(11) $hue-neutral-99 inset, 0 0 0 rem(7) $hue-neutral-33 inset;
+    }
+  }
+  
+  &.button--larr, &.button--rarr {
+    display: grid;
+    align-items: stretch;
+  }
+  
+  &.button--larr, &.button--rarr {
+    grid-template-columns:
+      [larr-start]
+      s(6)
+      [larr-end label-start]
+      1fr
+      [label-end rarr-start]
+      s(6)
+      [rarr-end]
+  }
 
-      background: transparent;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: auto;
-      color: #f5f3f1fa;
-      border-bottom: 0px solid transparent;
-      padding: s(3) s(4);
-      position: relative;
-      text-decoration: none;
-      transform: scale3d(1,1,1);
-      transition: transform $button-pushy-time $button-pushy-ease;
-      transform-origin: center bottom;
-      z-index: 0;
-      -webkit-user-select: none;
-      cursor: pointer;
+  .button__label {
+    display: flex;
+    flex-wrap: wrap;
+    grid-column: label;
+  }
+  
+  .button__subtitle {
+    @include typography(680, $t-1, s(2), rem(.12), 0, rem(.006));
+    
+    display: flex;
+    flex: 1 1 100%;
+    text-decoration: none;
+  }
+  
+  &.button--larr .button__title,
+  &.button--larr .button__subtitle {
+    grid-column: label / rarr;
+  }
+  
+  &.button--rarr .button__title,
+  &.button--rarr .button__subtitle{
+    grid-column: larr / label;
+  }
+  
+    // See next block for pushy style
+  &.button--left,
+  &.button--rarr {
+    justify-content: flex-start;
+  }
+  
+  &.button--rarr, &.button--pushy {
+    .button__subtitle {
+      margin: s(1) 0 0 0;
+    }
+  }
+  
+  &.button--larr {
+    @include at-least(w1) {
+      margin-left: s(-6);
+      margin-right: s(6);
+    }
+    
+    .button__label {
 
+    }
     
-    /* button face/fill */
-    &::before {
-      @include smooth-box(19);
+    .button__subtitle {
+      margin: s(1) 0 0;
+    }
+  }
+  
+  &.button--larr .button__label,
+  &.button--rarr .button__label {
+    align-items: center;
+    display: contents;
+    flex: 1 1 100%;
+    justify-content: space-between;
+  }
+  
+  .button__title {
+    grid-column: label;
+    text-decoration: underline;
+    text-decoration-thickness: inherit; // firefox
+  }
+  
+  &.button--pushy .button__title {
+    text-decoration: none;
+  }
+  
+  &.button--rarr .button__label::after,
+  &.button--larr .button__label::before {
+    @include typography(440, $t1, s(2), rem(-0.07));
       
-      content: '';
-      display: block;
-      position: absolute;
-      transform: translate(0, 0);
-      left: 0;
-      right: 0;
-      bottom: $button-pushy-raise;
-      top: 0;
-      background: #9d1907;
-      z-index: -1;
-      opacity: 1;
-      transition: transform $button-pushy-time $button-pushy-ease, opacity $button-pushy-time $button-pushy-ease;
-    }
+    flex: 0 0 auto;
+    max-width: s(6);
+    text-decoration: none;
+  }
+  
+  &.button--larr .button__label::before {
+    align-self: center;
+    content: "←";
+    display: block;
+    grid-column: larr;
+    padding: 0 s(3) 0 0;
+  }
+  
+  &.button--rarr .button__label::after {
+    align-self: center;
+    content: "→";
+    display: block;
+    grid-column: rarr;
+    padding: 0 0 0 s(3);
+  }
+  
+  &.button--pushy.button--rarr .button__label::after {
+    font-weight: 540;
+  }
+}
+  
+  
+// TODO: Extend to use any shape! As a bug demonstrated, other “chunky”
+//       shapes could work well, like a block arrow, rounded star, etc.
+// TODO: Refactor to include a hover state. Resting state would be a “halfway”
+//       transform so elements have room to click down and to spring up.
+//       This should enable a springier return to resting with that buffer.
+
+a.button--pushy {
+  $button-pushy-raise: rem(5);
+  $button-pushy-press: rem(-5);
+  $button-pushy-time: .36s;
+  $button-pushy-ease: cubic-bezier(.22,1.28,.62,1);
+  
+  
+  // Main button text: use slight transparency on text color to
+  // get a little benefit of the dimmed :active state
+  
+  @include typography(540, $t1, s(3), rem(-0.07));
+  @include smooth-box(19,19,19,19);
+
+  align-items: center;
+  background: $hue-transparent;
+  color: #f5f3f1fa;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  padding: s(3, -0.5) s(4) s(3, 0.5);
+  position: relative;
+  text-decoration: none;
+  transform: scale3d(1,1,1);
+  transform-origin: center bottom;
+  transition: transform $button-pushy-time $button-pushy-ease;
+  -webkit-user-select: none;
+  z-index: 0;
+  
+  @include theme(dark) {
+    background: $hue-transparent;
+  }
+  
+  // Pushy button fill (top)
+  &::before {
+    @include pseudo-overlay($bottom: $button-pushy-raise);
+    @include smooth-box(19,19,19,19);
     
-    /* shadow */
-    &::after {
-      @include smooth-box(19);
-      
-      align-items: center;
-      justify-content: center;
-      content: '';
-      display: flex;
-      transform: translate(0, 0px);
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      opacity: 1;
-      transition: transform $button-pushy-time $button-pushy-ease;
-      background: #5c0d03;
-      z-index: -2;
-    }
+    display: block;
+    transform: translate(0, 0);
+    background: $hue-orange-33;
+    z-index: -1;
+    opacity: 1;
+    transition: transform $button-pushy-time $button-pushy-ease, opacity $button-pushy-time $button-pushy-ease;
     
-    /** On click **********/
+    @include theme(dark) {
+      opacity: .8
+    }
+  }
+  
+  // Pushy button shadow (bottom)
+  &::after {
+    @include pseudo-overlay();
+    @include smooth-box(19,19,19,19);
     
-    &:active {
-      transform: translate(0, $button-pushy-raise);
-      transition: transform 0s;
-    }
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    transform: translate(0, 0px);
+    opacity: 1;
+    transition: transform $button-pushy-time $button-pushy-ease;
+    background: $hue-orange-00;
+    z-index: -2;
+  }
+  
+  
+  // Pushy interactions
+  
+  &:active {
+    transform: translate(0, $button-pushy-raise);
+    transition: transform 0s;
+  }
+  
+  &:active::before {
+    transform: translate(0px, 0px);
+    opacity: .75;
+    transition: transform 0s, opacity 0s;
     
-    /* fill */
-    &:active::before {
-      transform: translate(0px, 0px);
-      opacity: .75;
-      transition: transform 0s, opacity 0s;
+    @include theme(dark) {
+      opacity: .58;
     }
-    
-    /* shadow */
-    &:active::after {
-      opacity: 1.8;
-      transition: transform 0s;
-      transform: translate(0, $button-pushy-press);
-    }
-    
-    &.button--left {
-      justify-content: flex-start;
-    }
-    
-    &.button--rarr {
-      justify-content: flex-start;
-      
-      &::after {
-        
-      }
-    }
-    
-    &.button--rarr span {
-      display: flex;
-      flex: 1 1 100%;
-      justify-content: space-between;
-    }
-      
-    &.button--rarr span::after {
-      content: "→";
-      flex: 0 0 auto;
-      padding: 0 0 0 s(2);
-    }
+  }
+  
+  /* shadow */
+  &:active::after {
+    opacity: 1.8;
+    transition: transform 0s;
+    transform: translate(0, $button-pushy-press);
+  }
+  
+  &:focus {
+    box-shadow: none;
+  }
+  
+  &:focus-visible::before {
+    box-shadow: 0 0 0 rem(7) $hue-orange-33 inset, 0 0 0 rem(9.5) currentColor inset;
+    border-radius: rem(16.5);
   }
 }

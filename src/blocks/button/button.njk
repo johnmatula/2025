@@ -1,7 +1,8 @@
-{% macro button(label, link, classList = "") %}
-<div class="buttonset">
+{% macro button(label, link, classList = "", subtitle = "") %}
   <a class="button {{classList}}" href="{{link}}">
-    <span>{{label}}</span>
+    <span class="button__label"><span class="button__title">{{label}}</span></span>
+    {% if(subtitle) %}
+    <span class="button__subtitle">{{subtitle}}</span>
+    {% endif %}
   </a>
-</div>
 {% endmacro %}

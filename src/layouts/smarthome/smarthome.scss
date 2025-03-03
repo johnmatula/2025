@@ -1,1 +1,408 @@
 @use "../_base/base" as *;
+
+@use "../_base/base" as *;
+@use "_layout" as *;
+
+:root {
+  --fill-page: #{$hue-neutral-cc};
+  --color-text: #{$hue-neutral-00};
+  
+  --fill-navigation-out: #{rgba($hue-neutral-cc,.88)};
+  --fill-navigation-in: #{$hue-neutral-cc};
+  --fill-navigation-line: #{$hue-neutral-99};
+  
+  
+  @include theme(dark) {
+    --fill-page: #{$hue-neutral-00};
+    --color-text: #{$hue-neutral-cc};
+    
+    --fill-navigation-out: transparent;
+    --fill-navigation-in: #{$hue-neutral-00};
+    --fill-navigation-line: #{$hue-neutral-66};
+  }
+}
+
+
+.navigation {
+  color: $hue-neutral-00;
+  
+  @include theme(dark) {
+    color: $hue-neutral-ff;
+  }
+  
+  .home__svg path {
+    fill: $hue-orange-66;
+    
+    @include theme(dark) {
+      fill: $hue-orange-66;
+    }
+  }
+  
+  a {
+    @include theme(dark) {
+      color: $hue-orange-99;
+    }
+  }
+}
+
+.home {
+  &::after {
+    background: $hue-neutral-ff;
+    mix-blend-mode: multiply;
+    
+    @include theme(dark) {
+      background: rgba($hue-neutral-33,.35);
+      mix-blend-mode: lighten;
+    }
+  }
+  
+  &:focus::after {
+    box-shadow: 0 0 0 rem(6) $hue-neutral-ff inset, 0 0 0 rem(9) currentColor inset;
+    
+    @include theme(dark) {
+      box-shadow: 0 0 0 rem(6) rgba($hue-neutral-00,.7) inset, 0 0 0 rem(9) currentColor inset;
+    }
+  }
+}
+
+.topbar::after {
+  @include backdrop-filter(grayscale(101%) brightness(100%) contrast(95%) sepia(2%));
+  
+  @include theme(dark) {
+    @include backdrop-filter(grayscale(101%) brightness(220%) contrast(95%) sepia(2%));
+  }
+}
+
+.links a.blocklink {
+  @include theme(dark) {
+    color: $hue-gold-cc;
+  }
+  
+  &:hover, &:focus {
+    @include theme(dark) {
+      color: $hue-gold-ff;
+    }
+  }
+  
+  &:active {
+    @include theme(dark) {
+      color: $hue-gold-99;
+    }
+  }
+}
+
+.onfill {
+  @include theme(dark) {
+    fill: $hue-gold-99;
+  }
+}
+
+a.button.button--pushy {
+  &::before {
+    @include theme(dark) {
+      background-color: $hue-gold-cc;
+      opacity: 1;
+    }
+  }
+  
+  &:focus-visible::before {
+    @include theme(dark) {
+      box-shadow: 0 0 0 rem(7) $hue-gold-cc inset, 0 0 0 rem(9.5) currentColor inset;
+    }
+  }
+  
+  &:active::before {
+    @include theme(dark) {
+      opacity: .4;
+    }
+  }
+  
+  @include theme(dark) {
+    color: $hue-neutral-00;
+  }
+  
+  &::after {
+    @include theme(dark) {
+      background-color: $hue-gold-66;
+    }
+  }
+}
+
+.content {
+  @include typography(480, $t0, s(3.5), rem(-.02), 16, rem(.004));
+  
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  font-feature-settings: 'pnum' 1;
+  
+  &__contents {
+    flex: 0 0 auto;
+    flex-direction: column;
+  }
+  
+  section {
+    @extend %layout-base;
+  }
+  
+  p, .sprite, .heading, .linklist, .buttonset {
+    grid-column: major;
+  }
+  
+  p ~ p {
+    padding: s(3.5) 0 0;
+  }
+}
+
+.intro {
+  margin: s(-1.5) 0 0 0;
+  overflow: hidden;
+  
+  svg {
+    grid-column: major;
+    height: s(60);
+    margin: 0 0 0 s(-48.5);
+    max-width: none;
+  }
+}
+
+.hero {
+  &__summary {
+    @include typography(500, $t3, s(6), rem(-.8), 0, 0, $font-display);
+    
+    color: $hue-neutral-00;
+    grid-column: major;
+    margin: s(-15) 0 0;
+    
+    @include theme(dark) {
+      color: $hue-neutral-ff;
+    }
+    
+    @include at-least(w1) {
+      @include typography(480, $t4, s(8), rem(-1.1), 0, 0, $font-display);
+    }
+  }
+}
+
+.clapper {
+  fill: #080400;
+  
+  @include theme(dark) {
+    fill: #{$hue-neutral-cc};
+  }
+}
+
+.bigpic {
+  margin: s(4.5) 0 0 0;
+  
+  svg, .sprite {
+    grid-column: major;
+  }
+  
+  svg {
+    display: none;
+    
+    @include at-least(w1) {
+      display: block;
+      height: s(39.5);
+      margin: 0 0 0 s(-28);
+    }
+    
+    @include at-least(w3) {
+    }
+  }
+  
+  .sprite {
+    @include smooth-box(35, 35, 35, 35);
+    
+    margin: 0 s(-3.5);
+    
+    @include at-least(w1) {
+      margin: s(1.5) s(-1.5) 0 s(-7.5);
+    }
+  }
+}
+
+.heading {
+  @include typography(680, $t0, s(3), rem(-.06));
+  
+  padding: s(6) 0 0;
+  
+  .headingspacer {
+    display: none;
+  }
+}
+
+.leader {
+  margin: s(14) 0 0;
+  
+  .aside {
+    grid-column: root;
+    margin: s(3.5) 0 0 s(-1.5);
+    overflow: hidden;
+    
+    @include at-least(w1) {
+      grid-column: root / minor;
+      height: 0;
+      margin: 0 0 0 s(-3);
+      overflow: visible;
+      position: relative;
+    }
+    
+    @include at-least(w3) {
+      margin: 0 0 0 s(-1);
+    }
+    
+    
+    svg {
+      cursor: default;
+      height: s(60);
+      text-rendering: optimizeSpeed;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+  }
+}
+
+.links {
+  margin: s(-18) 0 0;
+  
+  .linklist {
+    margin: s(1) 0 0;
+  }
+  
+  .blocklink {
+    @include theme(dark) {
+      color: $hue-orange-cc;
+    }
+  }
+  
+  .blocklink:hover,
+  .blocklink:focus {
+    @include theme(dark) {
+      color: $hue-orange-ff;
+    }
+  }
+  
+  .blocklink:active {
+    @include theme(dark) {
+      color: $hue-orange-99;
+    }
+  }
+  
+  .aside {
+    display: none;
+    grid-column: root;
+    overflow: hidden;
+    
+    @include at-least(w1) {
+      display: block;
+      grid-column: root / minor;
+      height: 0;
+      overflow: visible;
+      position: relative;
+    }
+    
+    svg {
+      height: s(39.5);
+      
+      @include at-least(w1) {
+        margin: 0 0 0 s(-3);
+      }
+      
+      @include at-least(w3) {
+        margin: 0 0 0 s(-1);
+      }
+    }
+  }
+  
+  
+}
+
+.outro {
+  .contents {
+    grid-column: root;
+    
+    margin: s(-13.5) 0 0 s(19);
+    
+    @include at-least(w1) {
+      
+      margin: s(-18.5) 0 0 s(60);
+    }
+    
+    @include at-least(w3) {
+      grid-column: major / root;
+      margin: s(-20.5) 0 0 s(60);
+    }
+  }
+  
+  svg {
+    height: s(39.5);
+    
+    @include at-least(w1) {
+      display: block;
+    }
+    
+    @include at-least(w3) {
+    }
+  }
+}
+
+* ~ .heading {
+  padding: s(6) 0 0;
+}
+
+.content p.caption {
+  padding: 0 0 s(4) 0;
+}
+
+.bouquet {
+  overflow: hidden;
+  padding: s(13) 0 0;
+  
+  svg {
+    grid-column: major;
+    
+    height: rem(1628);
+    margin: 0 0 0 s(-48.5);
+    max-width: none;
+  }
+}
+
+.divider {
+  margin: s(-4) 0 0;
+  
+  @include theme(dark) {
+    background: $hue-neutral-00;
+  }
+  
+  .divider__d, .divider__f {
+    fill: $hue-neutral-99;
+  }
+  
+  @include theme(dark) {
+    .divider__d, .divider__f {
+      fill: $hue-neutral-33;
+    }
+  }
+  
+  .divider__staff {
+    fill: $hue-neutral-66;
+  }
+}
+
+.footer {
+  background: $hue-neutral-99;
+  
+  @include theme(dark) {
+    background: $hue-neutral-33;
+  }
+}
+
+
+// Digits 0-9 to use to recreate the clock button.
+@font-face {
+  font-family: "SmarthomeDigits";
+  src: url(data:application/font-woff2;charset=utf-8;base64,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) format(woff2);
+}
