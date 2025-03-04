@@ -35,7 +35,7 @@ To build this site, I made some deliberate choices([!](https://64.media.tumblr.c
 An image sprite sheet is a single file that contains multiple, unrelated images. I use this technique to prepare a sheet for each page. The images to be shown on that page are first smooshed together into one file. It’s loaded by the page and re-sliced into separate visuals. This reduces the amount of network requests for graphics down to one. 
 
 **Assets for each page are optimized.**
-Art and content is represented with plain text and vector art. Raster images are separated from vector art so that they can be optimally served, like on the Smarthome page.
+Art and content is represented with plain text and vector art. Raster images are separated from vector art so that they can be optimally served, like on the [Smarthome](https://johnmatu.la/smarthome/) page.
 
 **Type is set with variable fonts.** There are two fonts used on the site. As variable fonts, they offer a gradation of weights at a very low file size. They have been optimized before being `base64`’d into the CSS file itself — included like that because of how important they are to the site. At a cost of a heavier stylesheet, this avoids two additional network requests and initial styling flashes.
 
