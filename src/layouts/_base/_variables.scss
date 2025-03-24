@@ -34,8 +34,8 @@ $root-max-width: s(175);
     --root-gap: #{s(4)};
     
     @include at-least(w0) {
-      --root-margin: #{s(5)};
-      --root-gap: #{s(5)};
+      --root-margin: #{s(4.5)};
+      --root-gap: #{s(5.5)};
     }
     
     @include at-least(w1) {
