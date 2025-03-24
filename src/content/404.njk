@@ -11,12 +11,13 @@ themecolor: #101112
 ogdesc: This page couldn’t be found.
 ---
 
+{% from "src/blocks/br/br.njk" import br %}
 
 
 {% block content %}
 
 <section class="general">
-	<p>Well hm, sorry about this. I’ll find this page and get back to you.</p>
+	<p>Well hm, sorry about this. {{br()}} Let me find this page and get back to you.</p>
 	<p><a href="/">&larr; Home</a></p>
 </section>
 
