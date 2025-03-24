@@ -23,7 +23,7 @@
 a {
   &:focus {
     outline: rem(2.5) solid currentColor;
-    outline-offset: rem(5);
+    outline-offset: rem(4.5);
   }
 }
 
@@ -36,7 +36,7 @@ a.button {
   color: $hue-neutral-00;
   display: flex;
   justify-content: center;
-  padding: s(2.25, 1) s(4) s(2.25, -1);
+  padding: s(2.25, 0.5) s(4) s(2.25, -0.5);
   text-decoration: none;
   
   @include theme(dark) {
@@ -98,6 +98,12 @@ a.button {
   &.button--left,
   &.button--rarr {
     justify-content: flex-start;
+  }
+  
+  &.button--pushy {
+    @include at-least(w1) {
+      align-self: flex-start;
+    }
   }
   
   &.button--rarr, &.button--pushy {
@@ -240,6 +246,16 @@ a.button--pushy {
     z-index: -2;
   }
   
+  &:focus {
+    box-shadow: none;
+  }
+  
+  &:focus-visible::before {
+    box-shadow: 0 0 0 rem(7) $hue-orange-33 inset, 0 0 0 rem(9.5) currentColor inset;
+    border-radius: rem(16.5);
+  }
+  
+  
   
   // Pushy interactions
   
@@ -263,14 +279,5 @@ a.button--pushy {
     opacity: 1.8;
     transition: transform 0s;
     transform: translate(0, $button-pushy-press);
-  }
-  
-  &:focus {
-    box-shadow: none;
-  }
-  
-  &:focus-visible::before {
-    box-shadow: 0 0 0 rem(7) $hue-orange-33 inset, 0 0 0 rem(9.5) currentColor inset;
-    border-radius: rem(16.5);
   }
 }
