@@ -20,6 +20,10 @@
 	}
 }
 
+.art--orbiter {
+	font-family: $font-text;
+}
+
 
 .navigation {
 	color: $hue-neutral-00;
@@ -44,10 +48,6 @@
 }
 
 .hero {
-	tspan {
-		fill: var(--color-text);
-	}
-	
 	.hero__art {
 		display: inline-block;
 		grid-column: root;
@@ -82,6 +82,24 @@
 		flex-direction: column;
 	}
 	
+	p a, li a {
+		@include theme(dark) {
+			color: var(--color-link, #{$hue-orange-cc});
+		}
+		
+		&:hover, &:focus {
+			@include theme(dark) {
+				color: var(--color-link, #{$hue-orange-ff});
+			}
+		}
+		
+		&:active {
+			@include theme(dark) {
+				color: var(--color-link, #{$hue-orange-99});
+			}
+		}
+	}
+	
 	section {
 		@extend %layout-base;
 	}
@@ -95,11 +113,15 @@
 	}
 	
 	p, li {
-		max-width: s(55);
+		max-width: s(65);
 	}
 	
-	p ~ p, ul, li + li {
+	p ~ p, ul {
 		padding: s(3.5) 0 0;
+	}
+	
+	li + li {
+		padding: s(1.5) 0 0;
 	}
 	
 	h1 {
@@ -135,12 +157,58 @@
 		}
 	}
 	
+	a.button {
+		&:focus {
+			box-shadow: 0 0 0 rem(6) $hue-neutral-99 inset, 0 0 0 rem(8.5) $hue-neutral-33 inset;
+			border-radius: rem(15);
+			outline: none;
+			
+			@include theme(dark) {
+				box-shadow: 0 0 0 rem(6) $hue-neutral-33 inset, 0 0 0 rem(8.5) $hue-neutral-99 inset;
+			}
+		}
+	}
+	
 	.subtitle {
 		@include typography(480, $t2, s(5), rem(-.043), 0, 0);
 	}
 	
 	.metadata {
 		@include typography(680, $t-1, s(1.5), rem(.12), 0, 0);
+	}
+	
+	
+	.caption {
+		@include typography(520, $t-1, s(3), rem(.2), 0, 0, $font-text);
+		margin: s(8) 0;
+		
+		a {
+			text-decoration-thickness: rem(1.25);
+		}
+	}
+	
+	.twarn {
+		
+		margin: s(16) 0 s(16) s(8);
+		position: relative;
+		
+		&::before {
+			background: $hue-orange-cc;
+			content: 'Warning: ';
+			display: block;
+			position: absolute;
+			text-indent: -9999px;
+			overflow: hidden;
+			left: s(-8);
+			top: s(.5);
+			width: s(2);
+			height: s(2);
+			transform: rotate(45deg);
+		}
+		
+		@include at-least(w1) {
+			margin: s(16) 0;
+		}
 	}
 }
 
@@ -173,7 +241,92 @@
 	mix-blend-mode: difference;
 }
 
-.essay {
-	padding: s(15) 0 0 0;
+.content--essay {
+	p {
+		@include typography(460, $t0, s(4.5), rem(.35), 22, rem(.12), $font-display);
+	}
+	
+	p ~ p, ul, ul ~ p {
+		padding-top: s(5);
+	}
+
 }
 
+
+.hero.hero--where {
+	background: $hue-black;
+	position: relative;
+	
+	.hero__lines {
+		display: none;
+		position: absolute;
+		padding: rem(372) 0 rem(128) 0;
+		left: 0;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		
+		svg {
+			width: 100%;
+		}
+		
+		@include at-least(w0) {
+			display: block;
+		}
+	}
+	
+	.hero__art {
+		display: block;
+		grid-column: root;
+		position: relative;
+		padding: rem(372) 0 rem(128) 0;
+		
+		@include at-least(w0) {
+			justify-content: center;
+			display: flex;
+		}
+		
+		@include at-least(w1) {
+			grid-column: major / root;
+			justify-content: flex-start;
+		}
+	}
+	
+	svg {
+		max-height: rem(312 / 3 * 2);
+	}
+	
+	@include at-least(w0) {
+		svg {
+			max-height: none;
+			height: rem(312 / 3 * 2);
+		}
+	}
+	
+	@include at-least(w1) {
+		margin: 0 0 0 s(-25);
+		max-width: calc(100% + #{s(25)});
+		width: calc(100% + #{s(25)});
+		
+		svg {
+			height: rem(312 / 4 * 3);
+		}
+	}
+	
+	@include at-least(w2) {
+		margin: 0 0 0 s(-30);
+		max-width: calc(100% + #{s(30)});
+		width: calc(100% + #{s(30)});
+		
+		svg {
+			height: rem(312);
+		}
+	}
+	
+	@include at-least(w3) {
+		margin: 0 0 0 s(-35);
+		max-width: calc(100% + #{s(35)});
+		width: calc(100% + #{s(35)});
+	}
+}
+	
