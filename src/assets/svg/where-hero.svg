@@ -1,0 +1,11 @@
+<svg preserveAspectRatio="xMaxYMin slice" viewBox="0 0 496 312" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path fill="#000" d="M0 0h496v312h-496z"/><text font-size="120" letter-spacing="-0.426" fill="#A19D99" style="font-weight: 422;">
+            <tspan x="172" y="87" class="art--orbiter" >where</tspan>
+        </text><text font-size="120" letter-spacing="-2.426" fill="#524F4C">
+            <tspan x="179" y="191" class="art--orbiter" >john</tspan>
+        </text><text font-size="120" letter-spacing="-2.426" fill="#524F4C">
+            <tspan x="-4" y="191" class="art--orbiter" >did</tspan>
+        </text><text font-size="120" letter-spacing="1.774" fill="#490804">
+            <tspan x="179" y="287" class="art--orbiter" >go</tspan>
+            <tspan x="315.747" y="287" letter-spacing="-1.926"> </tspan>
+            <tspan x="330.98" y="287">?</tspan>
+        </text><path d="m496 287 0 4-496 0 0-4 496 0Zm0-32 0 4-496 0 0-4 496 0Zm0-32 0 4-496 0 0-4 496 0Zm0-32 0 4-496 0 0-4 496 0Zm0-32 0 4-496 0 0-4 496 0Z" fill="#490804"/></g></svg>

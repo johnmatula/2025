@@ -1,0 +1,48 @@
+---
+title: Essays
+titletag: Essays  ╱  John Matula
+
+themecolor: #101112
+
+layout: default/default.njk
+
+permalink: /essays/index.html
+
+ogdesc: I write some essays now and then.
+
+ogimage: 
+---
+
+{% from "src/blocks/buttonset/buttonset.njk" import buttonsetOpen, buttonsetClose %}
+{% from "src/blocks/button/button.njk" import button %}
+{% from "src/blocks/br/br.njk" import br %}
+{% from "src/blocks/blocklink/blocklink.njk" import blocklink %}
+{% from "src/blocks/divider/divider.njk" import divider %}
+{% from "src/blocks/sprite/sprite.njk" import sprite %}
+{% from "src/blocks/heading/heading.njk" import heading %}
+
+
+{% block content %}
+
+<section class="content">
+	<p><br><br></p>
+	
+	<ul>
+		<li><a href="/essays/where/">Where did John go?</a><br>March 10, 2025</li>
+		<!--li><a href="/essays/blip/">What blip?</a><br>January 14, 2025</li-->
+	</ul>
+	
+	<p><br><br></p>
+	
+	
+	{{ buttonsetOpen() }}
+	{{ button("Back home", "/", "button--larr") }}
+	{{ buttonsetClose() }}
+	
+	<p><br><br></p>
+	
+	{{ divider("five") }}
+	
+</section>
+
+{% endblock %}
