@@ -129,7 +129,7 @@ a.button.button--pushy {
 }
 
 .content {
-  @include typography(480, $t0, s(3.5), rem(-.02), 16, rem(.004));
+  @include typography(480, $t0, s(3), rem(-.02), 16, rem(.004));
   
   align-items: stretch;
   display: flex;
@@ -144,6 +144,10 @@ a.button.button--pushy {
   
   section {
     @extend %layout-base;
+  }
+  
+  p {
+    line-height: s(3.5);
   }
   
   p, .sprite, .heading, .linklist, .buttonset {
@@ -317,7 +321,9 @@ a.button.button--pushy {
     }
   }
   
-  
+  .blocklink__li + .blocklink__li {
+    margin-top: s(1.5);
+  }
 }
 
 .outro {
