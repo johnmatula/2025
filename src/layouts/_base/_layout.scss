@@ -15,7 +15,7 @@
       [root-start]
       calc(var(--root-margin) + env(safe-area-inset-left))
       [minor-start major-start]
-      auto
+      1fr
       [minor-end major-end]
       calc(var(--root-margin) + env(safe-area-inset-right))
       [root-end];
